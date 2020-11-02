@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  # Webサーバ
+  nginx:
+    container_name: pripla_api_nginx
+    hostname: pripla_api_nginx
+    image: nginx
+    ports:
+      - 8000:80
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      TZ: 'Asia/Tokyo'
+    depends_on:
+      - php
+    networks:
+      - pripla
+
+  # Web API
+  php:
+    container_name: pripla_api_php
+    hostname: pripla_api_php
+    build: ./docker/php
+    volumes:
+      - .:/var/www
+    environment:
+      TZ: 'Asia/Tokyo'
+    depends_on:
+      - mysql
+    networks:
+      - pripla
+
+  # データベース
+  mysql:
+    container_name: pripla_api_mysql
+    image: mysql:5.7
+    ports:
+      - 3307:3306
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: pripla
+      MYSQL_USER: pripla
+      MYSQL_PASSWORD: pripla
+      MYSQL_ROOT_PASSWORD: pripla
+      TZ: 'Asia/Tokyo'
+    networks:
+      - pripla
+
+networks:
+  pripla:
+    external: true
