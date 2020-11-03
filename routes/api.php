@@ -14,6 +14,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// タイムラインの取得
+Route::get('/tl', function (Request $request) {
+    return '{}';
+});
+
+// デートプランの詳細
+Route::get('/detail', function (Request $request) {
+    return '{}';
+});
+
+// 地域（都道府県）の取得
+Route::get('/prefectures', function (Request $request) {
+    return '{}';
+});
+
+// 予算の取得
+Route::get('/budget', function (Request $request) {
+    return '{}';
+});
+
+// ターゲット（男/女/どちらでも可）
+Route::get('/target', function (Request $request) {
+    return '{}';
+});
+
+// 投稿
+Route::post('/post', function (Request $request) {
+    return '{}';
 });
