@@ -42,10 +42,10 @@ services:
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: pripla
-      MYSQL_USER: pripla
-      MYSQL_PASSWORD: pripla
-      MYSQL_ROOT_PASSWORD: pripla
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
       TZ: 'Asia/Tokyo'
     networks:
       - pripla
