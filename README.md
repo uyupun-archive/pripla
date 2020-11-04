@@ -76,13 +76,19 @@ GET /api/v0/prefectures
 Request
 
 ```json
-
+{}
 ```
 
 Response
 
 ```json
-
+[
+  {
+    "id": 1,
+    "name": "兵庫県"
+  },
+  ...
+]
 ```
 
 - 予算の一覧の取得
