@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CreatePrefecturesSeeder::class);
         $this->call(CreateTargetsSeeder::class);
+        $this->call(CreateBudgetsSeeder::class);
     }
 }

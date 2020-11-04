@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V0\TimelineController;
 use App\Http\Controllers\Api\V0\DetailController;
 use App\Http\Controllers\Api\V0\PrefecturesController;
-use App\Http\Controllers\Api\V0\BudgetController;
+use App\Http\Controllers\Api\V0\BudgetsController;
 use App\Http\Controllers\Api\V0\TargetsController;
 use App\Http\Controllers\Api\V0\PostController;
 
@@ -30,7 +30,7 @@ Route::get('/detail', DetailController::class);
 Route::get('/prefectures', PrefecturesController::class);
 
 // 予算の一覧の取得
-Route::get('/budget', BudgetController::class);
+Route::get('/budgets', BudgetsController::class);
 
 // ターゲット（男/女/どちらでも可）の取得
 Route::get('/targets', TargetsController::class);

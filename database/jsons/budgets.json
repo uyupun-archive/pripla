@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "lower_limit": 0,
+    "upper_limit": 1500
+  },
+  {
+    "id": 2,
+    "lower_limit": 1500,
+    "upper_limit": 5000
+  },
+  {
+    "id": 3,
+    "lower_limit": 5000,
+    "upper_limit": 10000
+  },
+  {
+    "id": 4,
+    "lower_limit": 10000,
+    "upper_limit": 30000
+  },
+  {
+    "id": 5,
+    "lower_limit": 30000,
+    "upper_limit": null
+  }
+]

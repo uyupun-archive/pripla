@@ -98,19 +98,25 @@ Response
 Endpoint
 
 ```
-GET /api/v0/budget
+GET /api/v0/budgets
 ```
 
 Request
 
 ```json
-
+{}
 ```
 
 Response
 
 ```json
-
+[
+  {
+    "id": 1,
+    "range": "0 - 1,500円"
+  },
+  ...
+]
 ```
 
 - ターゲット（男/女/どちらでも可）の取得
