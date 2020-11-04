@@ -1,6 +1,8 @@
 # Pripla
 
-Princess & Prince date planning service.
+<img src="./front/assets/logo/logo_black.png" width="200px">
+
+**Princess & Prince date planning service.**
 
 ### コマンド
 
