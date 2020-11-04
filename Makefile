@@ -10,7 +10,7 @@ setup:
 	docker-compose up -d
 	docker-compose exec php composer install
 	docker-compose exec php php artisan key:generate
-	# make db
+	make db
 
 up:
 	docker-compose up -d
