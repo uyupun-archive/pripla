@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\V0\TimelineController;
 use App\Http\Controllers\Api\V0\DetailController;
 use App\Http\Controllers\Api\V0\PrefecturesController;
 use App\Http\Controllers\Api\V0\BudgetController;
-use App\Http\Controllers\Api\V0\TargetController;
+use App\Http\Controllers\Api\V0\TargetsController;
 use App\Http\Controllers\Api\V0\PostController;
 
 /*
@@ -33,7 +33,7 @@ Route::get('/prefectures', PrefecturesController::class);
 Route::get('/budget', BudgetController::class);
 
 // ターゲット（男/女/どちらでも可）の取得
-Route::get('/target', TargetController::class);
+Route::get('/targets', TargetsController::class);
 
 // 投稿
 Route::post('/post', PostController::class);

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api\V0;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Target;
 
-class TargetController extends Controller
+class TargetsController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -15,6 +16,7 @@ class TargetController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return response('{}', 200);
+        $targets = Target::all();
+        return response($targets, 200);
     }
 }

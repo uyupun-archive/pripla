@@ -87,7 +87,7 @@ Response
 [
   {
     "id": 1,
-    "name": "兵庫県"
+    "name": "北海道"
   },
   ...
 ]
@@ -118,19 +118,25 @@ Response
 Endpoint
 
 ```
-GET /api/v0/target
+GET /api/v0/targets
 ```
 
 Request
 
 ```json
-
+{}
 ```
 
 Response
 
 ```json
-
+[
+  {
+    "id": 1,
+    "name": "どちらでも"
+  },
+  ...
+]
 ```
 
 - 投稿
