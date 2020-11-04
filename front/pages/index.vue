@@ -40,23 +40,25 @@
   &-wrapper {
     padding-top: 60px;
     text-align: center;
+    font-family: 'Comfortaa', sans-serif;
+    color: $white;
   }
 
   &-image {
     width: 80px;
     height: 80px;
+    margin-bottom: 5px;
   }
 
   &-title {
     margin: 0;
     font-size: 36px;
-    color: $white;
+    margin-bottom: 5px;
   }
 
   &-subtitle {
     margin: 0;
     font-size: 16px;
-    color: $white;
   }
 }
 
