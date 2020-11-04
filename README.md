@@ -2,9 +2,11 @@
 
 Princess & Prince date planning service.
 
-### 環境構築
+### コマンド
 
 ```bash
+# 環境構築
 $ make install
-$ open http://localhost:8000
+# 開発用サーバの起動
+$ make up
 ```

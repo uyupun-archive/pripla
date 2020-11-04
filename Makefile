@@ -1,4 +1,7 @@
 init:
+	# Frontend
+	cd front && yarn install
+	# Backend
 	cp .env.example .env
 	docker network create pripla
 	docker-compose build --no-cache
@@ -9,6 +12,7 @@ init:
 
 up:
 	docker-compose up -d
+	cd front && yarn dev
 
 down:
 	docker-compose down
