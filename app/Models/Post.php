@@ -12,6 +12,8 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'prefecture_id', 'budget_id', 'target_id'];
+
     protected $hidden = ['prefecture_id', 'budget_id', 'target_id', 'created_at', 'updated_at'];
 
     public function prefecture()

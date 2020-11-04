@@ -191,11 +191,16 @@ GET /api/v0/post
 Request
 
 ```json
-
+{
+  "title": "foo_bar_baz",
+  "prefecture_id": 1,
+  "budget_id": 1,
+  "target_id": 1
+}
 ```
 
 Response
 
 ```json
-
+{}
 ```
