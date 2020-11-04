@@ -2,7 +2,7 @@
   <div>
     <div class="container background-image">
       <div class="logo-wrapper">
-        <img class="logo-image" src="~/assets/logo/logo_black.png" alt="ロゴ" />
+        <img class="logo-image" src="~/assets/logo/logo_white.png" alt="ロゴ" />
         <h2 class="logo-title">Pripla</h2>
         <h4 class="logo-subtitle">Princess & Prince date planning</h4>
       </div>
@@ -50,11 +50,13 @@
   &-title {
     margin: 0;
     font-size: 36px;
+    color: $white;
   }
 
   &-subtitle {
     margin: 0;
     font-size: 16px;
+    color: $white;
   }
 }
 
