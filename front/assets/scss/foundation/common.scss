@@ -1,0 +1,11 @@
+.container {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 15px;
+
+  @include desktop() {
+    max-width: 960px;
+    padding: 0 30px;
+    margin: 0 auto;
+  }
+}
