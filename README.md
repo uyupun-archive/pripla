@@ -4,10 +4,6 @@
 
 **Princess & Prince date planning service.**
 
-### カンプ
-
-- https://www.figma.com/file/4yro9aYdo3e74E17vFvDOI/Pripla?node-id=0%3A1
-
 ### コマンド
 
 ```bash
@@ -30,6 +26,10 @@ $ make tinker
 # Linterによるコード修正
 $ make lint
 ```
+
+### カンプ
+
+- https://www.figma.com/file/4yro9aYdo3e74E17vFvDOI/Pripla?node-id=0%3A1
 
 ### APIドキュメント
 
