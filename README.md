@@ -38,13 +38,31 @@ GET /api/v0/tl
 Request
 
 ```json
-
+{}
 ```
 
 Response
 
 ```json
-
+[
+  {
+    "id": 1,
+    "title": "foo_bar_baz",
+    "prefecture": {
+      "id": 1,
+      "name": "北海道"
+    },
+    "budget": {
+      "id": 1,
+      "range": "0 - 1,500円"
+    },
+    "target": {
+      "id": 1,
+      "name": "どちらでも"
+    }
+  },
+  ...
+]
 ```
 
 - デートプラン詳細の取得
