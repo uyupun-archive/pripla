@@ -23,16 +23,16 @@ use App\Http\Controllers\Api\V0\PostController;
 // タイムラインの取得
 Route::get('/tl', TimelineController::class);
 
-// デートプランの詳細
+// デートプラン詳細の取得
 Route::get('/detail', DetailController::class);
 
-// 地域（都道府県）の取得
+// 地域（都道府県）一覧の取得
 Route::get('/prefectures', PrefecturesController::class);
 
-// 予算の取得
+// 予算の一覧の取得
 Route::get('/budget', BudgetController::class);
 
-// ターゲット（男/女/どちらでも可）
+// ターゲット（男/女/どちらでも可）の取得
 Route::get('/target', TargetController::class);
 
 // 投稿
