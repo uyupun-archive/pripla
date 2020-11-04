@@ -1,4 +1,6 @@
-init:
+.PHONY: up down ps sh db tinker lint
+
+setup:
 	# Frontend
 	cd front && yarn install
 	# Backend
@@ -28,3 +30,6 @@ db:
 
 tinker:
 	docker-compose exec php php artisan tinker
+
+lint:
+	cd front && yarn lint --fix
