@@ -3,8 +3,8 @@ version: '3'
 services:
   # Webサーバ
   nginx:
-    container_name: pripla_api_nginx
-    hostname: pripla_api_nginx
+    container_name: pripla_nginx
+    hostname: pripla_nginx
     image: nginx
     ports:
       - 8000:80
@@ -20,8 +20,8 @@ services:
 
   # Web API
   php:
-    container_name: pripla_api_php
-    hostname: pripla_api_php
+    container_name: pripla_php
+    hostname: pripla_php
     build: ./docker/php
     volumes:
       - .:/var/www
@@ -34,10 +34,11 @@ services:
 
   # データベース
   mysql:
-    container_name: pripla_api_mysql
+    container_name: pripla_mysql
+    hostname: pripla_mysql
     image: mysql:5.7
     ports:
-      - "${DB_PORT}:3306"
+      - "${DB_EXPOSE_PORT}:${DB_PORT}"
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
