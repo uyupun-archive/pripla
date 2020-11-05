@@ -2,7 +2,7 @@
   <div class="container">
     <header class="header">
       <Fa icon="chevron-left" class="header-returnIcon" />
-      <p class="header-title">デートプラン</p>
+      <div class="header-title">デートプラン</div>
     </header>
     <div class="plan">
       <h3 class="plan-title">うゆぷん動物園めぐり</h3>
@@ -10,25 +10,24 @@
         <ul class="plan-ul">
           <li class="plan-li">
             <Fa icon="map-marker-alt" class="plan-detail__icon" />
-            <span>地域</span>
+            <span class="plan-detail__margin">地域</span>
+            <span>大坂</span>
           </li>
           <li class="plan-li">
             <Fa icon="dollar-sign" class="plan-detail__icon" />
-            <span>予算</span>
+            <span class="plan-detail__margin">予算</span>
+            <span>10,000~20,000</span>
           </li>
           <li class="plan-li">
             <Fa icon="user-friends" class="plan-detail__icon" />
             <span>男性向け</span>
           </li>
           <br />
+          <br />
           <li class="plan-li">
             <Fa icon="plane" class="plan-detail__icon" />
             <span>デートの流れ</span>
           </li>
-        </ul>
-        <ul class="plan-ul">
-          <li class="plan-li">大坂</li>
-          <li class="plan-li">10,000~20,000</li>
         </ul>
       </div>
     </div>
@@ -72,12 +71,14 @@
     list-style-type: none;
     padding: 0;
   }
+
   &-li {
-    margin-bottom: 15px;
+    display: inline-block;
+    margin-bottom: 10px;
+    height: 20px;
   }
 
   &-detail {
-    display: flex;
     width: 250px;
     text-align: left;
     font-size: 14px;
@@ -87,6 +88,10 @@
       width: 20px;
       height: 20px;
       vertical-align: middle;
+    }
+
+    &__margin {
+      margin-right: 20px;
     }
   }
 }
