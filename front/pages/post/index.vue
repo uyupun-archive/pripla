@@ -27,6 +27,7 @@
           />
         </div>
         <div>デートの流れ</div>
+        <FlowChart />
       </form>
     </div>
   </div>
