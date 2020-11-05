@@ -32,8 +32,7 @@ export default {
       })
     },
     fetchTargets() {
-      this.$fetchTargets((targets) => {
-        console.log('targets')
+      this.$fetchTargets().then((targets) => {
         console.log(targets)
         this.targets = targets
       })
