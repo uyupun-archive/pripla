@@ -3,7 +3,8 @@
 setup:
 	# Frontend
 	cd front && yarn install
-	cd front && cp .env.example .env
+	cp .env.example .env
+	cd ../
 	# Backend
 	cp .env.example .env
 	docker network create pripla
