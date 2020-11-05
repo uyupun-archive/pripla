@@ -3,13 +3,13 @@
     <div class="container background-image">
       <div class="logo-wrapper">
         <img class="logo-image" src="~/assets/logo/logo_white.png" alt="ロゴ" />
-        <h2 class="logo-title">Pripla</h2>
-        <h4 class="logo-subtitle">Princess & Prince date planning</h4>
+        <h1 class="logo-title">Pripla</h1>
+        <h2 class="logo-subtitle">Princess &amp; Prince date planning</h2>
       </div>
     </div>
     <div class="container">
       <div class="feature-wrapper">
-        <h5 class="feature-title">臨機応変なデートプランをシェア</h5>
+        <h2 class="feature-title">臨機応変なデートプランをシェア</h2>
         <p class="feature-description">
           ほげほげほげほげほげほげほげほげほげほげ
           ほげほげほげほげほげほげほげほげほげほげ
