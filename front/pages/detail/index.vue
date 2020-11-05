@@ -20,10 +20,8 @@
           </li>
           <li class="plan-li">
             <Fa icon="user-friends" class="plan-detail__icon" />
-            <span>男性向け</span>
+            <span class="plan-detail__margin">男性向け</span>
           </li>
-          <br />
-          <br />
           <li class="plan-li">
             <Fa icon="plane" class="plan-detail__icon" />
             <span>デートの流れ</span>
@@ -73,9 +71,12 @@
   }
 
   &-li {
-    display: inline-block;
     margin-bottom: 10px;
     height: 20px;
+
+    &:nth-of-type(3) {
+      margin-bottom: 20px;
+    }
   }
 
   &-detail {
