@@ -6,35 +6,31 @@
     </header>
     <div class="plan">
       <h3 class="plan-title">うゆぷん動物園めぐり</h3>
-      <table class="plan-detail">
-        <tr>
-          <td>
+      <div class="plan-detail">
+        <ul class="plan-ul">
+          <li class="plan-li">
             <Fa icon="map-marker-alt" class="plan-detail__icon" />
             <span>地域</span>
-          </td>
-          <td>大坂</td>
-        </tr>
-        <tr>
-          <td>
+          </li>
+          <li class="plan-li">
             <Fa icon="dollar-sign" class="plan-detail__icon" />
             <span>予算</span>
-          </td>
-          <td>10,000~20,000</td>
-        </tr>
-        <tr>
-          <td>
+          </li>
+          <li class="plan-li">
             <Fa icon="user-friends" class="plan-detail__icon" />
             <span>男性向け</span>
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td>
+          </li>
+          <br />
+          <li class="plan-li">
             <Fa icon="plane" class="plan-detail__icon" />
             <span>デートの流れ</span>
-          </td>
-        </tr>
-      </table>
+          </li>
+        </ul>
+        <ul class="plan-ul">
+          <li class="plan-li">大坂</li>
+          <li class="plan-li">10,000~20,000</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -66,23 +62,31 @@
 
 .plan {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 
   &-title {
     font-size: 18px;
   }
 
+  &-ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  &-li {
+    margin-bottom: 15px;
+  }
+
   &-detail {
+    display: flex;
     width: 250px;
     text-align: left;
-    line-height: 30px;
     font-size: 14px;
-    padding: 1px 4px;
     margin: 0 auto;
 
     &__icon {
       width: 20px;
       height: 20px;
+      vertical-align: middle;
     }
   }
 }
