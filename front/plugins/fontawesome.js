@@ -11,6 +11,7 @@ import {
   faChevronUp,
   faChevronRight,
   faChevronDown,
+  faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons'
 
 // nuxt.config.jsでCSSファイルを追加
@@ -27,6 +28,7 @@ const icons = [
   faChevronUp,
   faChevronRight,
   faChevronDown,
+  faChevronLeft,
 ]
 
 // 利用するアイコンをlibraryに追加
