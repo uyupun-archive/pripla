@@ -1,6 +1,15 @@
 <template>
   <div>
-    <button type="button" @click="addProcessNode">追加</button>
+    <button
+      type="button"
+      @click="
+        addProcessNode()
+        makePivotRepresentation()
+        makeRawHtml()
+      "
+    >
+      追加
+    </button>
     <div v-html="rawHtml" />
   </div>
 </template>
@@ -21,7 +30,7 @@ export default {
       },
       latestId: 0,
       pivotRepresentation: null,
-      rawHtml: '<div>hoge</div>',
+      rawHtml: '',
     }
   },
   mounted() {
@@ -55,16 +64,25 @@ export default {
       rootNode.addChildAtIndex(childNode, idx)
     },
     makePivotRepresentation() {
-      this.pivotRepresentation = ['ul', '/ul']
-      let ptr = 1
       const rootNode = this.tree.first((node) => node.model.id === 1)
-      for (const node of rootNode.children) {
-        this.pivotRepresentation.splice(ptr++, 0, [
+      this.pivotRepresentation = this.recursiveMakePivotRepresentation(
+        rootNode.children
+      )
+    },
+    recursiveMakePivotRepresentation(nodes) {
+      const pivotRepresentation = ['ul', '/ul']
+      let ptr = 1
+      for (const node of nodes) {
+        if (node.children.length > 0) {
+          this.recursiveMakePivotRepresentation(node.children)
+        }
+        pivotRepresentation.splice(ptr++, 0, [
           'li',
           node.model.printName,
           '/li',
         ])
       }
+      return pivotRepresentation
     },
     makeRawHtml() {
       let rawHtml = ''
