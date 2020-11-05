@@ -21,7 +21,7 @@
         </p>
       </div>
       <div class="start-btn">
-        <Button>さあ、はじめよう</Button>
+        <Button @click.native="$router.push(`/tl`)">さあ、はじめよう</Button>
       </div>
     </div>
   </div>
