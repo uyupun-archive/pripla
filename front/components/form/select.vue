@@ -24,7 +24,7 @@ export default {
       required: true,
     },
     options: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },
