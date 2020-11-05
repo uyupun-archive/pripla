@@ -47,6 +47,11 @@ export default {
     '@nuxtjs/style-resources',
   ],
 
+  server: {
+    host: process.env.APP_HOST || 'localhost',
+    port: process.env.APP_PORT || 3000,
+  },
+
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
     proxy: true,
