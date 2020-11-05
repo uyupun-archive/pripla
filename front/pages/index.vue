@@ -21,13 +21,20 @@
         </p>
       </div>
       <div class="start-btn">
-        <button>さあ、はじめよう</button>
+        <Button>さあ、はじめよう</Button>
       </div>
     </div>
   </div>
 </template>
 
-<script></script>
+<script>
+import Button from '~/components/button/index.vue'
+export default {
+  components: {
+    Button,
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 .background-image {
