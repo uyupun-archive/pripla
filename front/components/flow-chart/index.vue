@@ -1,6 +1,7 @@
 <template>
   <div>
     <button type="button" @click="addProcessNode">追加</button>
+    <div v-html="rawHtml" />
   </div>
 </template>
 
@@ -19,10 +20,14 @@ export default {
         if: 4,
       },
       latestId: 0,
+      pivotRepresentation: null,
+      rawHtml: '<div>hoge</div>',
     }
   },
   mounted() {
     this.initTree()
+    this.makePivotRepresentation()
+    this.makeRawHtml()
   },
   methods: {
     initTree() {
@@ -48,6 +53,33 @@ export default {
       })
       const idx = this.tree.all().length - 2
       rootNode.addChildAtIndex(childNode, idx)
+    },
+    makePivotRepresentation() {
+      this.pivotRepresentation = ['ul', '/ul']
+      let ptr = 1
+      const rootNode = this.tree.first((node) => node.model.id === 1)
+      for (const node of rootNode.children) {
+        this.pivotRepresentation.splice(ptr++, 0, [
+          'li',
+          node.model.printName,
+          '/li',
+        ])
+      }
+    },
+    makeRawHtml() {
+      let rawHtml = ''
+      for (const item of this.pivotRepresentation) {
+        if (Array.isArray(item)) {
+          let tmp = ''
+          for (const foo of item) {
+            tmp += '<' + foo + '>'
+          }
+          rawHtml += tmp
+        } else {
+          rawHtml += '<' + item + '>'
+        }
+      }
+      this.rawHtml = rawHtml
     },
   },
 }
