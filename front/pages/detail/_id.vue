@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <header class="header">
-      <Fa icon="chevron-left" class="header-returnIcon" />
+      <Fa
+        icon="chevron-left"
+        class="header-returnIcon"
+        @click="$router.push('/tl')"
+      />
       <div class="header-title">デートプラン</div>
     </header>
     <div class="plan">
