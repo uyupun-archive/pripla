@@ -7,22 +7,22 @@
     <div class="plan">
       <h3 class="plan-title">うゆぷん動物園めぐり</h3>
       <div class="plan-detail">
-        <ul class="plan-ul">
-          <li class="plan-li">
+        <ul class="plan-list">
+          <li class="plan-item">
             <Fa icon="map-marker-alt" class="plan-detail__icon" />
             <span class="plan-detail__margin">地域</span>
             <span>大坂</span>
           </li>
-          <li class="plan-li">
+          <li class="plan-item">
             <Fa icon="dollar-sign" class="plan-detail__icon" />
             <span class="plan-detail__margin">予算</span>
             <span>10,000~20,000</span>
           </li>
-          <li class="plan-li">
+          <li class="plan-item">
             <Fa icon="user-friends" class="plan-detail__icon" />
             <span class="plan-detail__margin">男性向け</span>
           </li>
-          <li class="plan-li">
+          <li class="plan-item">
             <Fa icon="plane" class="plan-detail__icon" />
             <span>デートの流れ</span>
           </li>
@@ -35,42 +35,40 @@
 <script></script>
 
 <style lang="scss" scoped>
-.container {
-  margin: 0 auto;
-}
-
 .header {
+  position: relative;
   height: 40px;
   display: flex;
   align-items: center;
 
   &-title {
     font-size: 14px;
-    margin: 4px auto;
+    width: 100%;
+    text-align: center;
   }
 
   &-returnIcon {
     position: absolute;
     width: 20px;
     height: 20px;
-    margin-left: 15%;
   }
 }
 
 .plan {
-  text-align: center;
   margin-bottom: 12px;
 
   &-title {
     font-size: 18px;
+    text-align: center;
+    font-weight: normal;
   }
 
-  &-ul {
+  &-list {
     list-style-type: none;
     padding: 0;
   }
 
-  &-li {
+  &-item {
     margin-bottom: 10px;
     height: 20px;
 
@@ -80,10 +78,9 @@
   }
 
   &-detail {
-    width: 250px;
     text-align: left;
     font-size: 14px;
-    margin: 0 auto;
+    padding-left: 25px;
 
     &__icon {
       width: 20px;
