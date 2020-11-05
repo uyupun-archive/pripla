@@ -8,7 +8,11 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Princess & Prince date planning service.' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Princess & Prince date planning service.',
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
@@ -17,7 +21,11 @@ export default {
   css: ['./assets/scss/app.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/fontawesome.js', '~/plugins/axios.js', '~/plugins/api.js'],
+  plugins: [
+    '~/plugins/fontawesome.js',
+    '~/plugins/axios.js',
+    '~/plugins/api.js',
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
