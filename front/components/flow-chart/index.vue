@@ -93,6 +93,12 @@ export default {
         if (node.children.length > 0) {
           this.recursiveConvertTreeModelToJson(node.children)
         }
+        node.model.children = Object.prototype.hasOwnProperty.call(
+          node.model,
+          'children'
+        )
+          ? node.model.children
+          : []
         jsonTree.splice(ptr++, 0, {
           ...node.model,
           raw: node,

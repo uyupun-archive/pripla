@@ -7,7 +7,7 @@
     >
       <div>{{ node.name }}</div>
       <button type="button" @click="addProcessNode(node.raw)">+</button>
-      <div v-if="node.hasOwnProperty('children') && node.children.length > 0">
+      <div v-if="node.children.length > 0">
         <FlowChartRenderer :tree="node.children" />
       </div>
     </div>
