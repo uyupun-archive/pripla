@@ -21,6 +21,15 @@ up:
 down:
 	docker-compose down
 
+prod-up:
+	docker-compose up -d
+	cd front
+	yarn build
+	nohup yarn start > /dev/null 2>&1 &
+
+prod-down:
+	kill `lsof -i :3001 | awk '$$1 == "node" { print $$2 }'`
+
 ps:
 	docker-compose ps
 
