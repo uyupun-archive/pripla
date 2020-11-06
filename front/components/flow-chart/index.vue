@@ -2,6 +2,7 @@
   <div>
     <Renderer
       :tree="jsonTree"
+      :depth="1"
       @addProcessNode="addProcessNode"
       @addIfNode="addIfNode"
       @removeNode="removeNode"

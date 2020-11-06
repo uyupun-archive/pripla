@@ -8,6 +8,7 @@
         process: node.type === treeTypes.process,
         if: node.type === treeTypes.if,
       }"
+      :style="{ 'margin-left': (depth - 1) * 20 + 'px' }"
     >
       <div>{{ node.name }}</div>
       <button
@@ -34,6 +35,7 @@
       <div v-if="node.children.length > 0">
         <Renderer
           :tree="node.children"
+          :depth="depth + 1"
           @addProcessNode="addProcessNode"
           @addIfNode="addIfNode"
           @removeNode="removeNode"
@@ -55,6 +57,10 @@ export default {
   props: {
     tree: {
       type: Array,
+      required: true,
+    },
+    depth: {
+      type: Number,
       required: true,
     },
   },
