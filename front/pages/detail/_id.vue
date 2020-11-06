@@ -8,23 +8,23 @@
       />
       <div class="header-title">デートプラン</div>
     </header>
-    <div class="plan">
-      <h3 class="plan-title">うゆぷん動物園めぐり</h3>
+    <div v-if="plan" class="plan">
+      <h3 class="plan-title">{{ plan.title }}</h3>
       <div class="plan-detail">
         <ul class="plan-list">
           <li class="plan-item">
             <Fa icon="map-marker-alt" class="plan-detail__icon" />
             <span class="plan-detail__margin">地域</span>
-            <span>大坂</span>
+            <span>{{ plan.prefecture.name }}</span>
           </li>
           <li class="plan-item">
             <Fa icon="dollar-sign" class="plan-detail__icon" />
             <span class="plan-detail__margin">予算</span>
-            <span>10,000~20,000</span>
+            <span>{{ plan.budget.range }}</span>
           </li>
           <li class="plan-item">
             <Fa icon="user-friends" class="plan-detail__icon" />
-            <span class="plan-detail__margin">男性向け</span>
+            <span class="plan-detail__margin">{{ plan.target.name }}</span>
           </li>
           <li class="plan-item">
             <Fa icon="plane" class="plan-detail__icon" />
@@ -33,10 +33,50 @@
         </ul>
       </div>
     </div>
+    <Loading v-if="loading" />
   </div>
 </template>
 
-<script></script>
+<script>
+import Loading from '~/components/loading/index.vue'
+
+export default {
+  components: {
+    Loading,
+  },
+  data() {
+    return {
+      plan: null,
+      loading: false,
+    }
+  },
+  mounted() {
+    if (this.$route.params.id) {
+      const params = {
+        id: this.$route.params.id,
+      }
+      this.loading = true
+      this.fetchDetail(params).finally(() => {
+        this.loading = false
+      })
+    } else {
+      this.$router.push('/404')
+    }
+  },
+  methods: {
+    fetchDetail(params) {
+      return this.$fetchDetail(params)
+        .then((plan) => {
+          this.plan = plan
+          this.loading = false
+        })
+        .catch(() => {
+          this.$router.push('/404')
+        })
+    },
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 .header {

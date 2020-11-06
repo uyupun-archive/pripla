@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header />
     <div class="container">
       <div class="feature-wrapper">
         <h2 class="feature-title">臨機応変なデートプランをシェア</h2>
@@ -22,11 +23,13 @@
 
 <script>
 import Button from '~/components/button/index.vue'
+import Header from '~/components/header/index.vue'
+
 export default {
   components: {
     Button,
+    Header,
   },
-  layout: 'header/index',
 }
 </script>
 

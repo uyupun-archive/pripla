@@ -23,16 +23,23 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  width: 75px;
-  height: 75px;
-  display: inline-block;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   background: $pink;
   outline: none;
   box-sizing: border-box;
-  padding: 17.5px;
+  padding: 0;
   border: none;
   border-radius: 50%;
+
+  @include desktop() {
+    width: 80px;
+    height: 80px;
+  }
 
   &:hover {
     opacity: 0.75;
@@ -40,8 +47,13 @@ export default {
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   color: $white;
+
+  @include desktop() {
+    width: 50px;
+    height: 50px;
+  }
 }
 </style>

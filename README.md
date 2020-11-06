@@ -1,6 +1,6 @@
 # Pripla
 
-<img src="./front/assets/logo/logo_black.png" width="200px">
+<img src="./front/assets/images/logo/logo_black.png" width="200px">
 
 **Princess & Prince date planning service.**
 
