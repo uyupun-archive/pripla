@@ -85,19 +85,18 @@ export default {
       return pivotRepresentation
     },
     makeRawHtml() {
+      this.rawHtml = this.recursiveMakeRawHtml(this.pivotRepresentation)
+    },
+    recursiveMakeRawHtml(pivotRepresentation) {
       let rawHtml = ''
-      for (const item of this.pivotRepresentation) {
-        if (Array.isArray(item)) {
-          let tmp = ''
-          for (const foo of item) {
-            tmp += '<' + foo + '>'
-          }
-          rawHtml += tmp
+      for (const content of pivotRepresentation) {
+        if (Array.isArray(content)) {
+          rawHtml += this.recursiveMakeRawHtml(content)
         } else {
-          rawHtml += '<' + item + '>'
+          rawHtml += '<' + content + '>'
         }
       }
-      this.rawHtml = rawHtml
+      return rawHtml
     },
   },
 }
