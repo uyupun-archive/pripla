@@ -86,32 +86,24 @@ export default {
     convertTreeModelToJson() {
       const rootNode = this.tree.first((node) => node.model.id === 1)
       this.jsonTree = this.recursiveConvertTreeModelToJson(rootNode.children)
+      console.log(this.jsonTree)
     },
     recursiveConvertTreeModelToJson(nodes) {
       const jsonTree = []
-      let ptr = 1
       for (const node of nodes) {
-        if (node.children.length > 0) {
-          this.recursiveConvertTreeModelToJson(node.children)
-        }
-        jsonTree.splice(ptr++, 0, this.shapeJson(node))
+        jsonTree.push({
+          ...node.model,
+          raw: node,
+        })
+        const idx = jsonTree.length - 1
+        if (node.children.length > 0)
+          jsonTree[idx].children = this.recursiveConvertTreeModelToJson(
+            node.children
+          )
+        else jsonTree[idx].children = []
       }
       return jsonTree
-    },
-    shapeJson(node) {
-      node.model.children = Object.prototype.hasOwnProperty.call(
-        node.model,
-        'children'
-      )
-        ? node.model.children
-        : []
-      return {
-        ...node.model,
-        raw: node,
-      }
     },
   },
 }
 </script>
-
-<style lang="scss" scoped></style>
