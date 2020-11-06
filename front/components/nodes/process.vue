@@ -52,6 +52,7 @@ export default {
 <style lang="scss" scoped>
 .arrow {
   position: relative;
+  display: inline-block;
   width: 200px;
   margin: 0 0 35px;
 
