@@ -33,6 +33,7 @@ class PostFactory extends Factory
             'prefecture_id' => rand(1, $prefectureLastId),
             'budget_id'     => rand(1, $budgetLastId),
             'target_id'     => rand(1, $targetLastId),
+            'flow_chart'    => [],
         ];
     }
 }
