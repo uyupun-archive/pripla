@@ -47,8 +47,6 @@ const fetchTargets = () => {
  * 投稿
  */
 const post = (payload) => {
-  console.log(payload)
-  // payload.flow_chart = [{ hoge: 1 }, { fuga: 2 }]
   return axios.$post('post', payload)
 }
 
