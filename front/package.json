@@ -16,7 +16,8 @@
     "@nuxtjs/proxy": "^2.0.1",
     "@nuxtjs/pwa": "^3.0.2",
     "core-js": "^3.6.5",
-    "nuxt": "^2.14.6"
+    "nuxt": "^2.14.6",
+    "tree-model": "^1.0.7"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
