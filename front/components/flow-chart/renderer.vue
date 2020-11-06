@@ -4,15 +4,33 @@
       v-for="node in tree"
       :key="node.id"
       :class="{
-        edge: node.type === treeTypes.begin || node.type === treeTypes.end,
+        edge: [treeTypes.begin, treeTypes.end].includes(node.type),
         process: node.type === treeTypes.process,
         if: node.type === treeTypes.if,
       }"
     >
       <div>{{ node.name }}</div>
-      <button type="button" @click="removeNode(node.raw)">-</button>
-      <button type="button" @click="addProcessNode(node.raw)">+</button>
-      <button type="button" @click="addIfNode(node.raw)">if</button>
+      <button
+        v-if="[treeTypes.process, treeTypes.if].includes(node.type)"
+        type="button"
+        @click="removeNode(node.raw)"
+      >
+        -
+      </button>
+      <button
+        v-if="![treeTypes.end].includes(node.type)"
+        type="button"
+        @click="addProcessNode(node.raw)"
+      >
+        +
+      </button>
+      <button
+        v-if="![treeTypes.end].includes(node.type)"
+        type="button"
+        @click="addIfNode(node.raw)"
+      >
+        if
+      </button>
       <div v-if="node.children.length > 0">
         <Renderer
           :tree="node.children"
