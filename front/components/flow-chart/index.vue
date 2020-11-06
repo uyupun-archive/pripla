@@ -1,37 +1,23 @@
 <template>
   <div>
-    <button
-      type="button"
-      @click="
-        addProcessNode()
-        convertTreeModelToJson()
-      "
-    >
-      追加
-    </button>
-    <FlowChartRenderer :tree="jsonTree" @addProcessNode="addProcessNode" />
+    <Renderer :tree="jsonTree" @addProcessNode="addProcessNode" />
   </div>
 </template>
 
 <script>
 import TreeModel from 'tree-model'
-import FlowChartRenderer from '~/components/flow-chart-renderer/index.vue'
+import { TreeTypes } from '~/components/flow-chart/tree-types.js'
+import Renderer from '~/components/flow-chart/renderer.vue'
 
 export default {
   components: {
-    FlowChartRenderer,
+    Renderer,
   },
   data() {
     return {
       treeModel: new TreeModel(),
       tree: null,
-      treeTypes: {
-        root: 1,
-        begin: 2,
-        end: 3,
-        process: 4,
-        if: 5,
-      },
+      treeTypes: TreeTypes,
       latestId: 0,
       jsonTree: [],
       rawHtml: '',
@@ -93,18 +79,21 @@ export default {
         if (node.children.length > 0) {
           this.recursiveConvertTreeModelToJson(node.children)
         }
-        node.model.children = Object.prototype.hasOwnProperty.call(
-          node.model,
-          'children'
-        )
-          ? node.model.children
-          : []
-        jsonTree.splice(ptr++, 0, {
-          ...node.model,
-          raw: node,
-        })
+        jsonTree.splice(ptr++, 0, this.shapeJson(node))
       }
       return jsonTree
+    },
+    shapeJson(node) {
+      node.model.children = Object.prototype.hasOwnProperty.call(
+        node.model,
+        'children'
+      )
+        ? node.model.children
+        : []
+      return {
+        ...node.model,
+        raw: node,
+      }
     },
   },
 }

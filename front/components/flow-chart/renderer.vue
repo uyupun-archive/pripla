@@ -8,19 +8,20 @@
       <div>{{ node.name }}</div>
       <button type="button" @click="addProcessNode(node.raw)">+</button>
       <div v-if="node.children.length > 0">
-        <FlowChartRenderer :tree="node.children" />
+        <Renderer :tree="node.children" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import FlowChartRenderer from '~/components/flow-chart-renderer/index.vue'
+import Renderer from '~/components/flow-chart/renderer.vue'
+import { TreeTypes } from '~/components/flow-chart/tree-types.js'
 
 export default {
-  name: 'FlowChartRenderer',
+  name: 'Renderer',
   components: {
-    FlowChartRenderer,
+    Renderer,
   },
   props: {
     tree: {
@@ -30,13 +31,7 @@ export default {
   },
   data() {
     return {
-      treeTypes: {
-        root: 1,
-        begin: 2,
-        end: 3,
-        process: 4,
-        if: 5,
-      },
+      treeTypes: TreeTypes,
     }
   },
   methods: {
@@ -58,4 +53,3 @@ export default {
   background-color: blue;
 }
 </style>
->
