@@ -10,6 +10,7 @@
       }"
     >
       <div>{{ node.name }}</div>
+      <button type="button" @click="removeNode(node.raw)">-</button>
       <button type="button" @click="addProcessNode(node.raw)">+</button>
       <button type="button" @click="addIfNode(node.raw)">if</button>
       <div v-if="node.children.length > 0">
@@ -17,6 +18,7 @@
           :tree="node.children"
           @addProcessNode="addProcessNode"
           @addIfNode="addIfNode"
+          @removeNode="removeNode"
         />
       </div>
     </div>
@@ -49,6 +51,9 @@ export default {
     },
     addIfNode(raw) {
       this.$emit('addIfNode', raw)
+    },
+    removeNode(raw) {
+      this.$emit('removeNode', raw)
     },
   },
 }

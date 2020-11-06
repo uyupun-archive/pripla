@@ -4,6 +4,7 @@
       :tree="jsonTree"
       @addProcessNode="addProcessNode"
       @addIfNode="addIfNode"
+      @removeNode="removeNode"
     />
   </div>
 </template>
@@ -24,7 +25,6 @@ export default {
       treeTypes: TreeTypes,
       latestId: 0,
       jsonTree: [],
-      rawHtml: '',
     }
   },
   mounted() {
@@ -78,6 +78,10 @@ export default {
       })
       const idx = selectedNode.getIndex() + 1
       baseNode.addChildAtIndex(childNode, idx)
+      this.convertTreeModelToJson()
+    },
+    removeNode(selectedNode) {
+      selectedNode.drop()
       this.convertTreeModelToJson()
     },
     convertTreeModelToJson() {
