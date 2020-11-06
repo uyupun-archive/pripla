@@ -6,7 +6,7 @@
       :class="[node.type === treeTypes.process ? 'process' : 'edge']"
     >
       <div>{{ node.name }}</div>
-      <button type="button">+</button>
+      <button type="button" @click="addProcessNode(node.raw)">+</button>
       <div v-if="node.hasOwnProperty('children') && node.children.length > 0">
         <FlowChartRenderer :tree="node.children" />
       </div>
@@ -38,6 +38,11 @@ export default {
         if: 5,
       },
     }
+  },
+  methods: {
+    addProcessNode(raw) {
+      this.$emit('addProcessNode', raw)
+    },
   },
 }
 </script>

@@ -9,7 +9,7 @@
     >
       追加
     </button>
-    <FlowChartRenderer :tree="jsonTree" />
+    <FlowChartRenderer :tree="jsonTree" @addProcessNode="addProcessNode" />
   </div>
 </template>
 
@@ -71,16 +71,16 @@ export default {
       this.tree = this.treeModel.parse(nodes)
       this.latestId = 5
     },
-    addProcessNode() {
+    addProcessNode(baseNode) {
       const rootNode = this.tree.first((node) => node.model.id === 1)
       const childNode = this.treeModel.parse({
         id: ++this.latestId,
-        name: 'process',
-        printName: '行動を入力',
+        name: '行動を入力',
         type: this.treeTypes.process,
       })
-      const idx = this.tree.all().length - 2
+      const idx = baseNode.getIndex() + 1
       rootNode.addChildAtIndex(childNode, idx)
+      this.convertTreeModelToJson()
     },
     convertTreeModelToJson() {
       const rootNode = this.tree.first((node) => node.model.id === 1)
@@ -93,7 +93,10 @@ export default {
         if (node.children.length > 0) {
           this.recursiveConvertTreeModelToJson(node.children)
         }
-        jsonTree.splice(ptr++, 0, node.model)
+        jsonTree.splice(ptr++, 0, {
+          ...node.model,
+          raw: node,
+        })
       }
       return jsonTree
     },
