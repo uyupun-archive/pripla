@@ -1,10 +1,21 @@
 <template>
-  <div class="edgenode">
-    <slot />
+  <div>
+    <div class="edgenode" :class="{ arrow: firstNode }">
+      <slot />
+    </div>
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  props: {
+    firstNode: {
+      type: Boolean,
+      default: false,
+    },
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 .edgenode {
@@ -20,5 +31,33 @@
   outline: none;
   box-sizing: border-box;
   border: none;
+}
+
+.arrow {
+  position: relative;
+  margin: 0 0 35px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -30px;
+    transform: translateX(-50%);
+    display: inline-block;
+    width: 1px;
+    height: 30px;
+    background: $black;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -40px;
+    transform: translateX(-50%);
+    display: inline-block;
+    border: 5px solid transparent;
+    border-top: 5px solid $black;
+  }
 }
 </style>
