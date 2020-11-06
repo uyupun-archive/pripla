@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Renderer :tree="jsonTree" @addProcessNode="addProcessNode" />
+    <Renderer
+      :tree="jsonTree"
+      @addProcessNode="addProcessNode"
+      @addIfNode="addIfNode"
+    />
   </div>
 </template>
 
@@ -63,6 +67,17 @@ export default {
         id: ++this.latestId,
         name: '行動を入力',
         type: this.treeTypes.process,
+      })
+      const idx = baseNode.getIndex() + 1
+      rootNode.addChildAtIndex(childNode, idx)
+      this.convertTreeModelToJson()
+    },
+    addIfNode(baseNode) {
+      const rootNode = this.tree.first((node) => node.model.id === 1)
+      const childNode = this.treeModel.parse({
+        id: ++this.latestId,
+        name: '条件を入力',
+        type: this.treeTypes.if,
       })
       const idx = baseNode.getIndex() + 1
       rootNode.addChildAtIndex(childNode, idx)

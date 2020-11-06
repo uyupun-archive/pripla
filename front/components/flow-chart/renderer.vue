@@ -3,10 +3,15 @@
     <div
       v-for="node in tree"
       :key="node.id"
-      :class="[node.type === treeTypes.process ? 'process' : 'edge']"
+      :class="{
+        edge: node.type === treeTypes.begin || node.type === treeTypes.end,
+        process: node.type === treeTypes.process,
+        if: node.type === treeTypes.if,
+      }"
     >
       <div>{{ node.name }}</div>
       <button type="button" @click="addProcessNode(node.raw)">+</button>
+      <button type="button" @click="addIfNode(node.raw)">if</button>
       <div v-if="node.children.length > 0">
         <Renderer :tree="node.children" />
       </div>
@@ -38,6 +43,9 @@ export default {
     addProcessNode(raw) {
       this.$emit('addProcessNode', raw)
     },
+    addIfNode(raw) {
+      this.$emit('addIfNode', raw)
+    },
   },
 }
 </script>
@@ -51,5 +59,10 @@ export default {
 .process {
   border: 2px solid #000;
   background-color: blue;
+}
+
+.if {
+  border: 2px solid #000;
+  background-color: green;
 }
 </style>
