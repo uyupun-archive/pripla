@@ -29,7 +29,7 @@
             />
           </div>
           <div>デートの流れ</div>
-          <FlowChart />
+          <FlowChart ref="flowChart" />
         </div>
       </form>
     </div>
@@ -64,14 +64,14 @@ export default {
       prefectureOptions: [
         {
           value: '0',
-          text: '地域',
+          text: '地域を選択してください',
           selected: true,
         },
       ],
       budgetOptions: [
         {
           value: '0',
-          text: '予算',
+          text: '予算を選択してください',
           selected: true,
         },
       ],
@@ -123,8 +123,8 @@ export default {
         })
       })
     },
-    post(params) {
-      return this.$post(params)
+    post(payload) {
+      return this.$post(payload)
         .then(() => {
           this.$router.push('/tl')
         })
@@ -134,14 +134,15 @@ export default {
     },
     onSubmit(e) {
       this.error = false
-      const params = {
+      const payload = {
         title: e.target.title.value,
         prefecture_id: Number(e.target.prefecture.value),
         budget_id: Number(e.target.budget.value),
         target_id: Number(e.target.target.value),
+        flow_chart: this.$refs.flowChart.getJsonTree(),
       }
       this.loading = true
-      this.post(params).finally(() => {
+      this.post(payload).finally(() => {
         this.loading = false
       })
     },

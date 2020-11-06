@@ -1,7 +1,7 @@
 <template>
   <div>
     <Renderer
-      :tree="jsonTree"
+      :tree="shapedTree"
       @addProcessNode="addProcessNode"
       @addChildProcessNode="addChildProcessNode"
       @addIfNode="addIfNode"
@@ -26,12 +26,12 @@ export default {
       tree: null,
       treeTypes: TreeTypes,
       latestId: 0,
-      jsonTree: [],
+      shapedTree: [],
     }
   },
   mounted() {
     this.initTree()
-    this.convertTreeModelToJson()
+    this.makeShapedTree()
   },
   methods: {
     initTree() {
@@ -74,7 +74,7 @@ export default {
       })
       const idx = selectedNode.getIndex() + 1
       baseNode.addChildAtIndex(childNode, idx)
-      this.convertTreeModelToJson()
+      this.makeShapedTree()
     },
     addChildNode(selectedNode, type, name) {
       const baseNode = this.tree.first(
@@ -86,30 +86,44 @@ export default {
         type,
       })
       baseNode.addChild(childNode)
-      this.convertTreeModelToJson()
+      this.makeShapedTree()
     },
     removeNode(selectedNode) {
       selectedNode.drop()
-      this.convertTreeModelToJson()
+      this.makeShapedTree()
     },
-    convertTreeModelToJson() {
+    makeShapedTree() {
       const rootNode = this.tree.first((node) => node.model.id === 1)
-      this.jsonTree = this.recursiveConvertTreeModelToJson(rootNode.children)
+      this.shapedTree = this.recursiveMakeShapedTree(rootNode.children)
     },
-    recursiveConvertTreeModelToJson(nodes) {
-      const jsonTree = []
+    recursiveMakeShapedTree(nodes) {
+      const shapedTree = []
       for (const node of nodes) {
-        jsonTree.push({
+        shapedTree.push({
           ...node.model,
           raw: node,
         })
+        const idx = shapedTree.length - 1
+        if (node.children.length > 0)
+          shapedTree[idx].children = this.recursiveMakeShapedTree(node.children)
+        else shapedTree[idx].children = []
+      }
+      return shapedTree
+    },
+    recursiveMakeJsonTree(tree) {
+      const jsonTree = []
+      for (const node of tree) {
+        delete node.raw
+        jsonTree.push(node)
         const idx = jsonTree.length - 1
         if (node.children.length > 0)
-          jsonTree[idx].children = this.recursiveConvertTreeModelToJson(
-            node.children
-          )
+          jsonTree[idx].children = this.recursiveMakeJsonTree(node.children)
         else jsonTree[idx].children = []
       }
+      return jsonTree
+    },
+    getJsonTree() {
+      const jsonTree = this.recursiveMakeJsonTree(this.shapedTree)
       return jsonTree
     },
   },

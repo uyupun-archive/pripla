@@ -68,6 +68,7 @@ Response
 {
   "id": 1,
   "title": "foo_bar_baz",
+  "flow_chart": [...],
   "prefecture": {
     "id": 1,
     "name": "北海道"
@@ -176,7 +177,8 @@ Request
   "title": "foo_bar_baz",
   "prefecture_id": 1,
   "budget_id": 1,
-  "target_id": 1
+  "target_id": 1,
+  "flow_chart": [...]
 }
 ```
 

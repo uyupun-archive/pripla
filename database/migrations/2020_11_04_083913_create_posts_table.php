@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('prefecture_id');
             $table->unsignedBigInteger('budget_id');
             $table->unsignedBigInteger('target_id');
+            $table->json('flow_chart');
             $table->timestamps();
 
             $table->foreign('prefecture_id')->references('id')->on('prefectures');
