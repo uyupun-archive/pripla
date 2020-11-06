@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V0;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Validator;
