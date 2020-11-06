@@ -1,12 +1,16 @@
 <template>
   <div>
     <input
+      v-if="inputMode"
       class="processnode"
       type="text"
       :name="name"
+      :value="defaultValue"
       placeholder="行動を入力"
       maxlength="16"
+      @input="onChange"
     />
+    <span v-else class="processnode">{{ value }}</span>
   </div>
 </template>
 
@@ -16,6 +20,28 @@ export default {
     name: {
       type: String,
       default: '',
+    },
+    defaultValue: {
+      type: String,
+      default: '',
+    },
+    inputMode: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  data() {
+    return {
+      value: '',
+    }
+  },
+  mounted() {
+    this.value = this.defaultValue
+  },
+  methods: {
+    onChange(e) {
+      this.value = e.target.value
+      this.$emit('input', e)
     },
   },
 }
@@ -35,8 +61,9 @@ export default {
   outline: none;
   box-sizing: border-box;
   border: none;
-}
-::placeholder {
-  color: $white;
+
+  &::placeholder {
+    color: $lightGray;
+  }
 }
 </style>
