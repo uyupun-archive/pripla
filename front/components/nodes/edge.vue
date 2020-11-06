@@ -1,18 +1,10 @@
 <template>
-  <div class="edgenode" :type="string">
+  <div class="edgenode">
     <slot />
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    type: {
-      type: String,
-    },
-  },
-}
-</script>
+<script></script>
 
 <style lang="scss" scoped>
 .edgenode {

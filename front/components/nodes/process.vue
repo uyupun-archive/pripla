@@ -1,23 +1,22 @@
 <template>
   <div>
-    <form>
-      <input
-        class="processnode"
-        type="text"
-        name="action"
-        placeholder="行動を入力"
-        maxlength="10"
-      />
-    </form>
+    <input
+      class="processnode"
+      type="text"
+      :name="name"
+      placeholder="行動を入力"
+      maxlength="16"
+    />
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      action: String,
-    }
+  props: {
+    name: {
+      type: String,
+      default: '',
+    },
   },
 }
 </script>

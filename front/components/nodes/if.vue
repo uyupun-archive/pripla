@@ -3,7 +3,7 @@
     <input
       class="if-inner"
       type="text"
-      name="action"
+      :name="name"
       placeholder="行動を入力"
       maxlength="16"
     />
@@ -12,10 +12,11 @@
 
 <script>
 export default {
-  data() {
-    return {
-      action: String,
-    }
+  props: {
+    name: {
+      type: String,
+      default: '',
+    },
   },
 }
 </script>
