@@ -24,6 +24,6 @@ class Budget extends Model
             $upperLimit = number_format($this->upper_limit);
             return "{$lowerLimit} - {$upperLimit}円";
         }
-        return "{$this->lower_limit}円以上";
+        return "{$lowerLimit}円以上";
     }
 }
