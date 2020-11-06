@@ -2,10 +2,10 @@
   <div>
     <Renderer
       :tree="jsonTree"
-      :depth="1"
       @addProcessNode="addProcessNode"
       @addChildProcessNode="addChildProcessNode"
       @addIfNode="addIfNode"
+      @addChildIfNode="addChildIfNode"
       @removeNode="removeNode"
     />
   </div>
@@ -45,34 +45,23 @@ export default {
             name: '集合',
             type: this.treeTypes.begin,
           },
-          {
-            id: 4,
-            name: 'ほげ',
-            type: this.treeTypes.process,
-          },
           { id: 3, name: '解散', type: this.treeTypes.end },
         ],
       }
       this.tree = this.treeModel.parse(nodes)
-      this.latestId = 5
+      this.latestId = 3
     },
     addProcessNode(selectedNode) {
       this.addNode(selectedNode, this.treeTypes.process, '行動を入力')
     },
     addChildProcessNode(selectedNode) {
-      const baseNode = this.tree.first(
-        (node) => node.model.id === selectedNode.model.id
-      )
-      const childNode = this.treeModel.parse({
-        id: ++this.latestId,
-        name: '行動を入力',
-        type: this.treeTypes.process,
-      })
-      baseNode.addChild(childNode)
-      this.convertTreeModelToJson()
+      this.addChildNode(selectedNode, this.treeTypes.process, '行動を入力')
     },
     addIfNode(selectedNode) {
       this.addNode(selectedNode, this.treeTypes.if, '条件を入力')
+    },
+    addChildIfNode(selectedNode) {
+      this.addChildNode(selectedNode, this.treeTypes.if, '条件を入力')
     },
     addNode(selectedNode, type, name) {
       const baseNode = this.tree.first(
@@ -85,6 +74,18 @@ export default {
       })
       const idx = selectedNode.getIndex() + 1
       baseNode.addChildAtIndex(childNode, idx)
+      this.convertTreeModelToJson()
+    },
+    addChildNode(selectedNode, type, name) {
+      const baseNode = this.tree.first(
+        (node) => node.model.id === selectedNode.model.id
+      )
+      const childNode = this.treeModel.parse({
+        id: ++this.latestId,
+        name,
+        type,
+      })
+      baseNode.addChild(childNode)
       this.convertTreeModelToJson()
     },
     removeNode(selectedNode) {

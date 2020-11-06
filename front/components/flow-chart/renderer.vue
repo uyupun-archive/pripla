@@ -8,7 +8,7 @@
         process: node.type === treeTypes.process,
         if: node.type === treeTypes.if,
       }"
-      :style="{ 'margin-left': (depth - 1) * 20 + 'px' }"
+      class="node"
     >
       <div>{{ node.name }}</div>
       <button
@@ -19,20 +19,6 @@
         +
       </button>
       <button
-        v-if="treeTypes.if === node.type"
-        type="button"
-        @click="addProcessNode(node.raw)"
-      >
-        Yes
-      </button>
-      <button
-        v-if="treeTypes.if === node.type"
-        type="button"
-        @click="addChildProcessNode(node.raw)"
-      >
-        No
-      </button>
-      <button
         v-if="[treeTypes.process, treeTypes.if].includes(node.type)"
         type="button"
         @click="removeNode(node.raw)"
@@ -40,18 +26,47 @@
         -
       </button>
       <button
-        v-if="treeTypes.end !== node.type"
+        v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
         type="button"
         @click="addIfNode(node.raw)"
       >
         if
       </button>
+      <button
+        v-if="node.type === treeTypes.if"
+        type="button"
+        @click="addProcessNode(node.raw)"
+      >
+        Yes
+      </button>
+      <button
+        v-if="node.type === treeTypes.if"
+        type="button"
+        @click="addChildProcessNode(node.raw)"
+      >
+        No
+      </button>
+      <button
+        v-if="node.type === treeTypes.if"
+        type="button"
+        @click="addIfNode(node.raw)"
+      >
+        Yes if
+      </button>
+      <button
+        v-if="node.type === treeTypes.if"
+        type="button"
+        @click="addChildIfNode(node.raw)"
+      >
+        No if
+      </button>
       <div v-if="node.children.length > 0">
         <Renderer
           :tree="node.children"
-          :depth="depth + 1"
           @addProcessNode="addProcessNode"
+          @addChildProcessNode="addChildProcessNode"
           @addIfNode="addIfNode"
+          @addChildIfNode="addChildIfNode"
           @removeNode="removeNode"
         />
       </div>
@@ -73,10 +88,6 @@ export default {
       type: Array,
       required: true,
     },
-    depth: {
-      type: Number,
-      required: true,
-    },
   },
   data() {
     return {
@@ -92,6 +103,9 @@ export default {
     },
     addIfNode(raw) {
       this.$emit('addIfNode', raw)
+    },
+    addChildIfNode(raw) {
+      this.$emit('addChildIfNode', raw)
     },
     removeNode(raw) {
       this.$emit('removeNode', raw)
@@ -114,5 +128,9 @@ export default {
 .if {
   border: 2px solid #000;
   background-color: green;
+}
+
+.node {
+  margin-left: 20px;
 }
 </style>
