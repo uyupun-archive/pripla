@@ -64,14 +64,14 @@ export default {
       prefectureOptions: [
         {
           value: '0',
-          text: '地域',
+          text: '地域を選択してください',
           selected: true,
         },
       ],
       budgetOptions: [
         {
           value: '0',
-          text: '予算',
+          text: '予算を選択してください',
           selected: true,
         },
       ],
@@ -133,7 +133,6 @@ export default {
         })
     },
     onSubmit(e) {
-      // console.log(this.$refs.flowChart.getJsonTree())
       this.error = false
       const payload = {
         title: e.target.title.value,

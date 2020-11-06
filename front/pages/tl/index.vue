@@ -36,7 +36,7 @@
         />
       </div>
       <div v-if="plansNot">
-        <p class="plans-not__msg">デートプランが存在しません</p>
+        <p class="plans-not__msg">該当のデートプランは見つかりませんでした</p>
       </div>
       <div class="btn-plus">
         <IconButton icon="plus" @click.native="$router.push('/post')" />
@@ -72,14 +72,14 @@ export default {
       prefectureOptions: [
         {
           value: '',
-          text: '地域',
+          text: '地域を選択してください',
           selected: true,
         },
       ],
       budgetOptions: [
         {
           value: '',
-          text: '予算',
+          text: '予算を選択してください',
           selected: true,
         },
       ],
