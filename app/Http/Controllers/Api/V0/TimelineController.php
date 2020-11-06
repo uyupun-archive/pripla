@@ -18,7 +18,8 @@ class TimelineController extends Controller
         ]);
         if ($validator->fails()) return response('{}', 400);
 
-        $query = Post::with(['prefecture', 'budget', 'target']);
+        $query = Post::select(['id', 'title', 'prefecture_id', 'budget_id', 'target_id'])
+                        ->with(['prefecture', 'budget', 'target']);
         if ($request->prefecture_id) $query->where('prefecture_id', $request->prefecture_id);
         if ($request->budget_id) $query->where('budget_id', $request->budget_id);
         if ($request->target_id) $query->where('target_id', $request->target_id);
