@@ -1,16 +1,18 @@
 <template>
   <div>
-    <input
-      v-if="inputMode"
-      class="processnode"
-      type="text"
-      :name="name"
-      :value="defaultValue"
-      placeholder="行動を入力"
-      maxlength="16"
-      @input="onChange"
-    />
-    <span v-else class="processnode">{{ value }}</span>
+    <div class="arrow">
+      <input
+        v-if="inputMode"
+        class="processnode"
+        type="text"
+        :name="name"
+        :value="defaultValue"
+        placeholder="行動を入力"
+        maxlength="16"
+        @input="onChange"
+      />
+      <span v-else class="processnode">{{ value }}</span>
+    </div>
   </div>
 </template>
 
@@ -48,10 +50,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.arrow {
+  position: relative;
+  width: 200px;
+  margin: 0 0 35px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -30px;
+    transform: translateX(-50%);
+    display: inline-block;
+    width: 1px;
+    height: 30px;
+    background: $black;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -40px;
+    transform: translateX(-50%);
+    display: inline-block;
+    border: 5px solid transparent;
+    border-top: 5px solid $black;
+  }
+}
+
 .processnode {
   width: 200px;
-  padding: 13px 20px;
-  border-radius: 10px;
   display: inline-block;
   text-align: center;
   color: $white;
@@ -60,7 +89,9 @@ export default {
   background: $pink;
   outline: none;
   box-sizing: border-box;
+  padding: 13px 20px;
   border: none;
+  border-radius: 10px;
 
   &::placeholder {
     color: $lightGray;
