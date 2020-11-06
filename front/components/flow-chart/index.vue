@@ -61,32 +61,28 @@ export default {
       this.tree = this.treeModel.parse(nodes)
       this.latestId = 5
     },
-    addProcessNode(baseNode) {
-      const rootNode = this.tree.first((node) => node.model.id === 1)
-      const childNode = this.treeModel.parse({
-        id: ++this.latestId,
-        name: '行動を入力',
-        type: this.treeTypes.process,
-      })
-      const idx = baseNode.getIndex() + 1
-      rootNode.addChildAtIndex(childNode, idx)
-      this.convertTreeModelToJson()
+    addProcessNode(selectedNode) {
+      this.addNode(selectedNode, this.treeTypes.process, '行動を入力')
     },
-    addIfNode(baseNode) {
-      const rootNode = this.tree.first((node) => node.model.id === 1)
+    addIfNode(selectedNode) {
+      this.addNode(selectedNode, this.treeTypes.if, '条件を入力')
+    },
+    addNode(selectedNode, type, name) {
+      const baseNode = this.tree.first(
+        (node) => node.model.id === selectedNode.parent.model.id
+      )
       const childNode = this.treeModel.parse({
         id: ++this.latestId,
-        name: '条件を入力',
-        type: this.treeTypes.if,
+        name,
+        type,
       })
-      const idx = baseNode.getIndex() + 1
-      rootNode.addChildAtIndex(childNode, idx)
+      const idx = selectedNode.getIndex() + 1
+      baseNode.addChildAtIndex(childNode, idx)
       this.convertTreeModelToJson()
     },
     convertTreeModelToJson() {
       const rootNode = this.tree.first((node) => node.model.id === 1)
       this.jsonTree = this.recursiveConvertTreeModelToJson(rootNode.children)
-      console.log(this.jsonTree)
     },
     recursiveConvertTreeModelToJson(nodes) {
       const jsonTree = []

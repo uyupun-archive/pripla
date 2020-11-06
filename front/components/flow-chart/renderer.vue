@@ -10,7 +10,6 @@
       }"
     >
       <div>{{ node.name }}</div>
-      <!-- <div>{{ node }}</div> -->
       <button type="button" @click="addProcessNode(node.raw)">+</button>
       <button type="button" @click="addIfNode(node.raw)">if</button>
       <div v-if="node.children.length > 0">
