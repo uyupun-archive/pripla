@@ -42,9 +42,7 @@
         <IconButton icon="plus" @click.native="$router.push('/post')" />
       </div>
     </div>
-    <div v-if="loading">
-      <Loading />
-    </div>
+    <Loading v-if="loading" />
   </div>
 </template>
 
@@ -171,12 +169,12 @@ export default {
 
       this.loading = true
       if (this.validation(params)) {
-        Promise.all([this.featchTl(params)]).finally(() => {
+        this.featchTl(params).finally(() => {
           this.$refs.header.toggleFilterPanel()
           this.loading = false
         })
       } else {
-        Promise.all([this.featchTl()]).finally(() => {
+        this.featchTl().finally(() => {
           this.$refs.header.toggleFilterPanel()
           this.loading = false
         })
