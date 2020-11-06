@@ -3,8 +3,14 @@ import { axios } from './axios'
 /**
  * タイムラインの取得
  */
-const fetchTL = () => {
-  return axios.$get('tl')
+const fetchTl = (params = null) => {
+  if (params) {
+    return axios.$get('tl', {
+      params,
+    })
+  } else {
+    return axios.$get('tl')
+  }
 }
 
 /**
@@ -47,7 +53,7 @@ const post = (payload) => {
 /* eslint-disable */
 
 export default ({}, inject) => {
-  inject('fetchTL', fetchTL)
+  inject('fetchTl', fetchTl)
   inject('fetchDetail', fetchDetail)
   inject('fetchPrefectures', fetchPrefectures)
   inject('fetchBudgets', fetchBudgets)
