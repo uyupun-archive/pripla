@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div class="background">
-      <div class="logo-wrapper">
-        <img class="logo-image" src="~/assets/logo/logo_white.png" alt="ロゴ" />
-        <h1 class="logo-title">Pripla</h1>
-        <h2 class="logo-subtitle">Princess &amp; Prince date planning</h2>
-      </div>
-    </div>
     <div class="container">
       <div class="feature-wrapper">
         <h2 class="feature-title">臨機応変なデートプランをシェア</h2>
@@ -33,42 +26,11 @@ export default {
   components: {
     Button,
   },
+  layout: 'header/index',
 }
 </script>
 
 <style lang="scss" scoped>
-.background {
-  height: 250px;
-  background: linear-gradient(-135deg, $orange, $pink);
-  margin-bottom: 30px;
-}
-
-.logo {
-  &-wrapper {
-    padding-top: 60px;
-    text-align: center;
-    font-family: 'Comfortaa', sans-serif;
-    color: $white;
-  }
-
-  &-image {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 5px;
-  }
-
-  &-title {
-    margin: 0;
-    font-size: 36px;
-    margin-bottom: 5px;
-  }
-
-  &-subtitle {
-    margin: 0;
-    font-size: 16px;
-  }
-}
-
 .feature {
   &-wrapper {
     text-align: center;
