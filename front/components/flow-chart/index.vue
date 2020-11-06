@@ -4,6 +4,7 @@
       :tree="jsonTree"
       :depth="1"
       @addProcessNode="addProcessNode"
+      @addChildProcessNode="addChildProcessNode"
       @addIfNode="addIfNode"
       @removeNode="removeNode"
     />
@@ -48,13 +49,6 @@ export default {
             id: 4,
             name: 'ほげ',
             type: this.treeTypes.process,
-            children: [
-              {
-                id: 5,
-                name: 'ぴよ',
-                type: this.treeTypes.process,
-              },
-            ],
           },
           { id: 3, name: '解散', type: this.treeTypes.end },
         ],
@@ -64,6 +58,18 @@ export default {
     },
     addProcessNode(selectedNode) {
       this.addNode(selectedNode, this.treeTypes.process, '行動を入力')
+    },
+    addChildProcessNode(selectedNode) {
+      const baseNode = this.tree.first(
+        (node) => node.model.id === selectedNode.model.id
+      )
+      const childNode = this.treeModel.parse({
+        id: ++this.latestId,
+        name: '行動を入力',
+        type: this.treeTypes.process,
+      })
+      baseNode.addChild(childNode)
+      this.convertTreeModelToJson()
     },
     addIfNode(selectedNode) {
       this.addNode(selectedNode, this.treeTypes.if, '条件を入力')

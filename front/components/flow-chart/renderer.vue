@@ -12,6 +12,27 @@
     >
       <div>{{ node.name }}</div>
       <button
+        v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
+        type="button"
+        @click="addProcessNode(node.raw)"
+      >
+        +
+      </button>
+      <button
+        v-if="treeTypes.if === node.type"
+        type="button"
+        @click="addProcessNode(node.raw)"
+      >
+        Yes
+      </button>
+      <button
+        v-if="treeTypes.if === node.type"
+        type="button"
+        @click="addChildProcessNode(node.raw)"
+      >
+        No
+      </button>
+      <button
         v-if="[treeTypes.process, treeTypes.if].includes(node.type)"
         type="button"
         @click="removeNode(node.raw)"
@@ -19,14 +40,7 @@
         -
       </button>
       <button
-        v-if="![treeTypes.end].includes(node.type)"
-        type="button"
-        @click="addProcessNode(node.raw)"
-      >
-        +
-      </button>
-      <button
-        v-if="![treeTypes.end].includes(node.type)"
+        v-if="treeTypes.end !== node.type"
         type="button"
         @click="addIfNode(node.raw)"
       >
@@ -72,6 +86,9 @@ export default {
   methods: {
     addProcessNode(raw) {
       this.$emit('addProcessNode', raw)
+    },
+    addChildProcessNode(raw) {
+      this.$emit('addChildProcessNode', raw)
     },
     addIfNode(raw) {
       this.$emit('addIfNode', raw)
