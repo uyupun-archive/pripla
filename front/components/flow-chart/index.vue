@@ -22,7 +22,7 @@ export default {
     return {
       treeModel: new TreeModel(),
       tree: null,
-      types: {
+      treeTypes: {
         root: 1,
         edge: 2,
         process: 3,
@@ -30,6 +30,11 @@ export default {
       },
       latestId: 0,
       pivotRepresentation: null,
+      pivotRepresentationTypes: {
+        startTag: 1,
+        endTag: 2,
+        content: 3,
+      },
       rawHtml: '',
     }
   },
@@ -43,10 +48,15 @@ export default {
       const nodes = {
         id: 1,
         name: 'root',
-        type: this.types.root,
+        type: this.treeTypes.root,
         children: [
-          { id: 2, name: 'begin', printName: '集合', type: this.types.edge },
-          { id: 3, name: 'end', printName: '解散', type: this.types.edge },
+          {
+            id: 2,
+            name: 'begin',
+            printName: '集合',
+            type: this.treeTypes.edge,
+          },
+          { id: 3, name: 'end', printName: '解散', type: this.treeTypes.edge },
         ],
       }
       this.tree = this.treeModel.parse(nodes)
@@ -58,7 +68,7 @@ export default {
         id: ++this.latestId,
         name: 'process',
         printName: '行動を入力',
-        type: this.types.process,
+        type: this.treeTypes.process,
       })
       const idx = this.tree.all().length - 2
       rootNode.addChildAtIndex(childNode, idx)
@@ -70,16 +80,22 @@ export default {
       )
     },
     recursiveMakePivotRepresentation(nodes) {
-      const pivotRepresentation = ['ul', '/ul']
+      const pivotRepresentation = [
+        { value: 'ul', type: this.pivotRepresentationTypes.startTag },
+        { value: 'ul', type: this.pivotRepresentationTypes.endTag },
+      ]
       let ptr = 1
       for (const node of nodes) {
         if (node.children.length > 0) {
           this.recursiveMakePivotRepresentation(node.children)
         }
         pivotRepresentation.splice(ptr++, 0, [
-          'li',
-          node.model.printName,
-          '/li',
+          { value: 'li', type: this.pivotRepresentationTypes.startTag },
+          {
+            value: node.model.printName,
+            type: this.pivotRepresentationTypes.content,
+          },
+          { value: 'li', type: this.pivotRepresentationTypes.endTag },
         ])
       }
       return pivotRepresentation
@@ -89,11 +105,15 @@ export default {
     },
     recursiveMakeRawHtml(pivotRepresentation) {
       let rawHtml = ''
-      for (const content of pivotRepresentation) {
-        if (Array.isArray(content)) {
-          rawHtml += this.recursiveMakeRawHtml(content)
+      for (const obj of pivotRepresentation) {
+        if (Array.isArray(obj)) {
+          rawHtml += this.recursiveMakeRawHtml(obj)
+        } else if (obj.type === this.pivotRepresentationTypes.startTag) {
+          rawHtml += '<' + obj.value + '>'
+        } else if (obj.type === this.pivotRepresentationTypes.endTag) {
+          rawHtml += '</' + obj.value + '>'
         } else {
-          rawHtml += '<' + content + '>'
+          rawHtml += obj.value
         }
       }
       return rawHtml
