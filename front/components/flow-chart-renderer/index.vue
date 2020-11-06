@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div v-if="pivotRepresentation.length > 0">
-      <div v-for="value in pivotRepresentation" :key="value">
-        <div>{{ value }}</div>
+    <div v-if="jsonTree.length > 0">
+      <!-- <div>{{ jsonTree }}</div> -->
+      <div v-for="node in jsonTree" :key="node.id">
+        <div>{{ node.printName }}</div>
         <button type="button">+</button>
       </div>
     </div>
@@ -12,7 +13,7 @@
 <script>
 export default {
   props: {
-    pivotRepresentation: {
+    jsonTree: {
       type: Array,
       required: true,
     },

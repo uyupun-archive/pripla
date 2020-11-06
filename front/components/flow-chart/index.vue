@@ -4,12 +4,12 @@
       type="button"
       @click="
         addProcessNode()
-        makePivotRepresentation()
+        convertTreeModelToJson()
       "
     >
       追加
     </button>
-    <FlowChartRenderer :pivot-representation="pivotRepresentation" />
+    <FlowChartRenderer :json-tree="jsonTree" />
   </div>
 </template>
 
@@ -32,13 +32,13 @@ export default {
         if: 4,
       },
       latestId: 0,
-      pivotRepresentation: [],
+      jsonTree: [],
       rawHtml: '',
     }
   },
   mounted() {
     this.initTree()
-    this.makePivotRepresentation()
+    this.convertTreeModelToJson()
   },
   methods: {
     initTree() {
@@ -70,22 +70,20 @@ export default {
       const idx = this.tree.all().length - 2
       rootNode.addChildAtIndex(childNode, idx)
     },
-    makePivotRepresentation() {
+    convertTreeModelToJson() {
       const rootNode = this.tree.first((node) => node.model.id === 1)
-      this.pivotRepresentation = this.recursiveMakePivotRepresentation(
-        rootNode.children
-      )
+      this.jsonTree = this.recursiveConvertTreeModelToJson(rootNode.children)
     },
-    recursiveMakePivotRepresentation(nodes) {
-      const pivotRepresentation = []
+    recursiveConvertTreeModelToJson(nodes) {
+      const jsonTree = []
       let ptr = 1
       for (const node of nodes) {
         if (node.children.length > 0) {
-          this.recursiveMakePivotRepresentation(node.children)
+          this.jsonTree(node.children)
         }
-        pivotRepresentation.splice(ptr++, 0, node.model.printName)
+        jsonTree.splice(ptr++, 0, node.model)
       }
-      return pivotRepresentation
+      return jsonTree
     },
   },
 }
