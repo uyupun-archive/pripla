@@ -42,12 +42,10 @@
         <IconButton icon="plus" @click.native="$router.push('/post')" />
       </div>
     </div>
-    <Process></Process>
   </div>
 </template>
 
 <script>
-import Process from '~/components/nodes/process.vue'
 import Card from '~/components/card/index.vue'
 import Header from '~/components/header/filter.vue'
 import SelectBox from '~/components/form/select.vue'
@@ -57,7 +55,6 @@ import IconButton from '~/components/button/icon.vue'
 
 export default {
   components: {
-    Process,
     Card,
     Header,
     SelectBox,

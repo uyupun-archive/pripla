@@ -6,6 +6,7 @@
         type="text"
         name="action"
         placeholder="行動を入力"
+        maxlength="10"
       />
     </form>
   </div>
