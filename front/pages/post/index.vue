@@ -38,6 +38,7 @@ import TextBox from '~/components/form/textbox.vue'
 import SelectBox from '~/components/form/select.vue'
 import RadioButton from '~/components/form/radio.vue'
 import Button from '~/components/button/index.vue'
+import FlowChart from '~/components/flow-chart/index.vue'
 
 export default {
   components: {
@@ -45,6 +46,7 @@ export default {
     RadioButton,
     Button,
     TextBox,
+    FlowChart,
   },
   data() {
     return {

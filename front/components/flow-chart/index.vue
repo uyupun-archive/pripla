@@ -5,19 +5,22 @@
       @click="
         addProcessNode()
         makePivotRepresentation()
-        makeRawHtml()
       "
     >
       追加
     </button>
-    <div v-html="rawHtml" />
+    <FlowChartRenderer :pivot-representation="pivotRepresentation" />
   </div>
 </template>
 
 <script>
 import TreeModel from 'tree-model'
+import FlowChartRenderer from '~/components/flow-chart-renderer/index.vue'
 
 export default {
+  components: {
+    FlowChartRenderer,
+  },
   data() {
     return {
       treeModel: new TreeModel(),
@@ -29,19 +32,13 @@ export default {
         if: 4,
       },
       latestId: 0,
-      pivotRepresentation: null,
-      pivotRepresentationTypes: {
-        startTag: 1,
-        endTag: 2,
-        content: 3,
-      },
+      pivotRepresentation: [],
       rawHtml: '',
     }
   },
   mounted() {
     this.initTree()
     this.makePivotRepresentation()
-    this.makeRawHtml()
   },
   methods: {
     initTree() {
@@ -80,43 +77,15 @@ export default {
       )
     },
     recursiveMakePivotRepresentation(nodes) {
-      const pivotRepresentation = [
-        { value: 'ul', type: this.pivotRepresentationTypes.startTag },
-        { value: 'ul', type: this.pivotRepresentationTypes.endTag },
-      ]
+      const pivotRepresentation = []
       let ptr = 1
       for (const node of nodes) {
         if (node.children.length > 0) {
           this.recursiveMakePivotRepresentation(node.children)
         }
-        pivotRepresentation.splice(ptr++, 0, [
-          { value: 'li', type: this.pivotRepresentationTypes.startTag },
-          {
-            value: node.model.printName,
-            type: this.pivotRepresentationTypes.content,
-          },
-          { value: 'li', type: this.pivotRepresentationTypes.endTag },
-        ])
+        pivotRepresentation.splice(ptr++, 0, node.model.printName)
       }
       return pivotRepresentation
-    },
-    makeRawHtml() {
-      this.rawHtml = this.recursiveMakeRawHtml(this.pivotRepresentation)
-    },
-    recursiveMakeRawHtml(pivotRepresentation) {
-      let rawHtml = ''
-      for (const obj of pivotRepresentation) {
-        if (Array.isArray(obj)) {
-          rawHtml += this.recursiveMakeRawHtml(obj)
-        } else if (obj.type === this.pivotRepresentationTypes.startTag) {
-          rawHtml += '<' + obj.value + '>'
-        } else if (obj.type === this.pivotRepresentationTypes.endTag) {
-          rawHtml += '</' + obj.value + '>'
-        } else {
-          rawHtml += obj.value
-        }
-      }
-      return rawHtml
     },
   },
 }
