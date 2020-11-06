@@ -115,6 +115,10 @@ export default {
       for (const node of tree) {
         delete node.raw
         jsonTree.push(node)
+        const idx = jsonTree.length - 1
+        if (node.children.length > 0)
+          jsonTree[idx].children = this.recursiveMakeJsonTree(node.children)
+        else jsonTree[idx].children = []
       }
       return jsonTree
     },
