@@ -139,6 +139,7 @@ export default {
         prefecture_id: Number(e.target.prefecture.value),
         budget_id: Number(e.target.budget.value),
         target_id: Number(e.target.target.value),
+        flow_chart: [{ foo: 'bar' }],
       }
       this.loading = true
       this.post(params).finally(() => {
