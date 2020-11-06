@@ -36,7 +36,7 @@
         />
       </div>
       <div v-if="plansNot">
-        <p>デートプランが存在しません</p>
+        <p class="plans-not__msg">デートプランが存在しません</p>
       </div>
       <div class="btn-plus">
         <IconButton icon="plus" @click.native="$router.push('/post')" />
@@ -217,6 +217,16 @@ export default {
     position: fixed;
     bottom: 15px;
     right: 15px;
+  }
+}
+
+.plans {
+  &-not {
+    &__msg {
+      font-size: 14px;
+      text-align: center;
+      margin: 0;
+    }
   }
 }
 </style>
