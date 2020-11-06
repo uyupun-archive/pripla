@@ -7,7 +7,6 @@
         <h2 class="logo-subtitle">Princess &amp; Prince date planning</h2>
       </div>
     </div>
-    <Nuxt />
   </div>
 </template>
 
