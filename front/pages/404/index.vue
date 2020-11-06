@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header />
     <div class="container center">
       <p class="msg">このページは存在しません</p>
       <Button @click.native="$router.push('/')">トップページへ戻る</Button>
@@ -9,12 +10,13 @@
 
 <script>
 import Button from '~/components/button/index.vue'
+import Header from '~/components/header/index.vue'
 
 export default {
   components: {
     Button,
+    Header,
   },
-  layout: 'header/index',
 }
 </script>
 

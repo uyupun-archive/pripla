@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Header>
-      <form @submit.prevent="onSubmit">
+    <Header ref="header">
+      <form @submit.prevent="search">
         <div class="form-item">
           <SelectBox name="prefecture" :options="prefectureOptions" />
         </div>
@@ -10,13 +10,13 @@
         </div>
         <div class="form-item form-radio">
           <RadioButton
-            id="target-1"
+            v-for="target in targets"
+            :id="`target-${target.id}`"
+            :key="target.id"
             name="target"
-            value="1"
-            text="どちらでも"
+            :value="String(target.id)"
+            :text="target.name"
           />
-          <RadioButton id="target-2" name="target" value="2" text="男性向け" />
-          <RadioButton id="target-3" name="target" value="3" text="女性向け" />
         </div>
         <div class="form-btn">
           <Button type="submit">検索</Button>
@@ -35,13 +35,14 @@
           @click.native="$router.push(`/detail/${plan.id}`)"
         />
       </div>
-      <div v-else>
-        <p>デートプランが存在しません</p>
+      <div v-if="plansNot">
+        <p class="plans-not__msg">デートプランが存在しません</p>
       </div>
       <div class="btn-plus">
         <IconButton icon="plus" @click.native="$router.push('/post')" />
       </div>
     </div>
+    <Loading v-if="loading" />
   </div>
 </template>
 
@@ -52,6 +53,7 @@ import SelectBox from '~/components/form/select.vue'
 import RadioButton from '~/components/form/radio.vue'
 import Button from '~/components/button/index.vue'
 import IconButton from '~/components/button/icon.vue'
+import Loading from '~/components/loading/index.vue'
 
 export default {
   components: {
@@ -61,20 +63,17 @@ export default {
     RadioButton,
     Button,
     IconButton,
+    Loading,
   },
   data() {
     return {
       plans: null,
+      plansNot: false,
       prefectureOptions: [
         {
           value: '',
           text: '地域',
           selected: true,
-        },
-        {
-          value: '1',
-          text: '北海道',
-          selected: false,
         },
       ],
       budgetOptions: [
@@ -83,57 +82,103 @@ export default {
           text: '予算',
           selected: true,
         },
-        {
-          value: '1',
-          text: '0 - 1,500円',
-          selected: false,
-        },
       ],
+      prefectures: null,
+      budgets: null,
+      targets: null,
+      loading: false,
     }
   },
   mounted() {
-    this.getPlans()
+    this.loading = true
+    Promise.all([
+      this.featchTl(),
+      this.fetchPrefectures(),
+      this.fetchBudgets(),
+      this.fetchTargets(),
+    ]).finally(() => {
+      this.loading = false
+    })
   },
   methods: {
-    getPlans() {
-      // API通信
-      this.plans = [
-        {
-          id: 1,
-          title: '北海道雪まつりプラン',
-          prefecture: {
-            id: 1,
-            name: '北海道',
-          },
-          budget: {
-            id: 1,
-            range: '0 - 1,500円',
-          },
-          target: {
-            id: 1,
-            name: 'どちらでも',
-          },
-        },
-        {
-          id: 2,
-          title: '北海道グルメプラン',
-          prefecture: {
-            id: 1,
-            name: '北海道',
-          },
-          budget: {
-            id: 1,
-            range: '0 - 1,500円',
-          },
-          target: {
-            id: 1,
-            name: 'どちらでも',
-          },
-        },
-      ]
+    featchTl(params = null) {
+      this.plans = null
+      this.plansNot = false
+      if (params) {
+        return this.$fetchTl(params).then((plans) => {
+          if (plans.length) this.plans = plans
+          else this.plansNot = true
+        })
+      } else {
+        return this.$fetchTl().then((plans) => {
+          if (plans.length) this.plans = plans
+          else this.plansNot = true
+        })
+      }
     },
-    onSubmit(e) {
-      // TODO: API通信
+    fetchPrefectures() {
+      return this.$fetchPrefectures().then((prefectures) => {
+        this.prefectures = prefectures
+        this.addPrefectureOptions(prefectures)
+      })
+    },
+    fetchBudgets() {
+      return this.$fetchBudgets().then((budgets) => {
+        this.budgets = budgets
+        this.addBudgetOptions(budgets)
+      })
+    },
+    fetchTargets() {
+      return this.$fetchTargets().then((targets) => {
+        this.targets = targets
+      })
+    },
+    addPrefectureOptions(prefectures) {
+      prefectures.map((prefecture) => {
+        this.prefectureOptions.push({
+          value: prefecture.id,
+          text: prefecture.name,
+          selected: false,
+        })
+      })
+    },
+    addBudgetOptions(budgets) {
+      budgets.map((budget) => {
+        this.budgetOptions.push({
+          value: budget.id,
+          text: budget.range,
+          selected: false,
+        })
+      })
+    },
+    validation(params) {
+      return (
+        'prefecture_id' in params ||
+        'budget_id' in params ||
+        'target_id' in params
+      )
+    },
+    search(e) {
+      const params = {}
+      if (Number(e.target.prefecture.value))
+        params.prefecture_id = Number(e.target.prefecture.value)
+      if (Number(e.target.budget.value))
+        params.budget_id = Number(e.target.budget.value)
+      if (Number(e.target.target.value))
+        params.target_id = Number(e.target.target.value)
+
+      this.loading = true
+      if (this.validation(params)) {
+        this.featchTl(params).finally(() => {
+          this.$refs.header.toggleFilterPanel()
+          this.loading = false
+        })
+      } else {
+        this.featchTl().finally(() => {
+          this.$refs.header.toggleFilterPanel()
+          this.loading = false
+        })
+      }
     },
   },
 }
@@ -172,6 +217,16 @@ export default {
     position: fixed;
     bottom: 15px;
     right: 15px;
+  }
+}
+
+.plans {
+  &-not {
+    &__msg {
+      font-size: 14px;
+      text-align: center;
+      margin: 0;
+    }
   }
 }
 </style>

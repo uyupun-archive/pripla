@@ -2,12 +2,15 @@
   <div>
     <div class="background">
       <div class="logo-wrapper">
-        <img class="logo-image" src="~/assets/logo/logo_white.png" alt="ロゴ" />
+        <img
+          class="logo-image"
+          src="~/assets/images/logo/logo_white.png"
+          alt="ロゴ"
+        />
         <h1 class="logo-title">Pripla</h1>
         <h2 class="logo-subtitle">Princess &amp; Prince date planning</h2>
       </div>
     </div>
-    <Nuxt />
   </div>
 </template>
 
