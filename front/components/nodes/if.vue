@@ -5,7 +5,7 @@
       type="text"
       name="action"
       placeholder="行動を入力"
-      maxlength="10"
+      maxlength="16"
     />
   </div>
 </template>
@@ -45,7 +45,7 @@ export default {
     outline: none;
     border: none;
     box-sizing: border-box;
-    transform: rotate(-45deg);
+    transform: skew(22deg, 22deg) rotate(-45deg);
 
     &:-webkit-autofill {
       animation-name: onAutoFillStart;
