@@ -14,6 +14,14 @@ Request
 {}
 ```
 
+```json
+{
+  "prefecture_id": 1,
+  "budget_id": 1,
+  "target_id": 1,
+}
+```
+
 Response
 
 ```json
