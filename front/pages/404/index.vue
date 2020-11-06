@@ -26,10 +26,11 @@ export default {
 }
 
 .msg {
-  font-size: 18px;
+  font-size: 14px;
   margin: 0 0 40px;
 
   @include desktop() {
+    font-size: 18px;
     margin: 0 0 60px;
   }
 }
