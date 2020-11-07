@@ -11,6 +11,14 @@
       class="node"
     >
       <div>{{ node.model.name }}</div>
+      <div>
+        <input
+          v-if="[treeTypes.process, treeTypes.if].includes(node.model.type)"
+          type="text"
+          :value="node.model.value"
+          @change="setValue(node, $event)"
+        />
+      </div>
       <button
         v-if="[treeTypes.begin, treeTypes.process].includes(node.model.type)"
         type="button"
@@ -63,6 +71,7 @@
       <div v-if="node.hasOwnProperty('children') && node.children.length > 0">
         <Tester
           :tree="node"
+          @setValue="setValue"
           @addProcessNode="addProcessNode"
           @addChildProcessNode="addChildProcessNode"
           @addIfNode="addIfNode"
@@ -95,20 +104,23 @@ export default {
     }
   },
   methods: {
-    addProcessNode(raw) {
-      this.$emit('addProcessNode', raw)
+    setValue(node, event) {
+      this.$emit('setValue', { node, value: event.target.value })
     },
-    addChildProcessNode(raw) {
-      this.$emit('addChildProcessNode', raw)
+    addProcessNode(node) {
+      this.$emit('addProcessNode', node)
     },
-    addIfNode(raw) {
-      this.$emit('addIfNode', raw)
+    addChildProcessNode(node) {
+      this.$emit('addChildProcessNode', node)
     },
-    addChildIfNode(raw) {
-      this.$emit('addChildIfNode', raw)
+    addIfNode(node) {
+      this.$emit('addIfNode', node)
     },
-    removeNode(raw) {
-      this.$emit('removeNode', raw)
+    addChildIfNode(node) {
+      this.$emit('addChildIfNode', node)
+    },
+    removeNode(node) {
+      this.$emit('removeNode', node)
     },
   },
 }

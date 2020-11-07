@@ -2,6 +2,7 @@
   <div>
     <Tester
       :tree="tree"
+      @setValue="setValue"
       @addProcessNode="addProcessNode"
       @addChildProcessNode="addChildProcessNode"
       @addIfNode="addIfNode"
@@ -48,6 +49,7 @@ export default {
       const nodes = {
         id: 1,
         name: 'root',
+        value: '',
         type: this.treeTypes.root,
         children: [
           {
@@ -60,6 +62,10 @@ export default {
       }
       this.tree = this.treeModel.parse(nodes)
       this.latestId = 3
+    },
+    setValue(args) {
+      const { node, value } = args
+      node.model.value = value
     },
     addProcessNode(selectedNode) {
       this.addNode(selectedNode, this.treeTypes.process, '行動を入力')
@@ -99,15 +105,13 @@ export default {
     removeNode(selectedNode) {
       selectedNode.drop()
     },
-    setValue(node, value) {
-      node.value = value
-    },
     makeShapedTree(nodes) {
       const shapedTree = []
       for (const node of nodes) {
         const obj = {
           id: node.id,
           name: node.name,
+          value: node.value,
           type: node.type,
           children: [],
         }
