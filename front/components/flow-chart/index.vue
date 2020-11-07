@@ -38,16 +38,14 @@ export default {
       const nodes = {
         id: 1,
         name: 'root',
-        value: '',
         type: this.treeTypes.root,
         children: [
           {
             id: 2,
             name: '集合',
-            value: '',
             type: this.treeTypes.begin,
           },
-          { id: 3, name: '解散', value: '', type: this.treeTypes.end },
+          { id: 3, name: '解散', type: this.treeTypes.end },
         ],
       }
       this.tree = this.treeModel.parse(nodes)
@@ -96,6 +94,9 @@ export default {
       selectedNode.drop()
       this.makeShapedTree()
     },
+    setValue(node, value) {
+      node.value = value
+    },
     makeShapedTree() {
       const rootNode = this.tree.first((node) => node.model.id === 1)
       this.shapedTree = this.recursiveMakeShapedTree(rootNode.children)
@@ -105,6 +106,7 @@ export default {
       for (const node of nodes) {
         shapedTree.push({
           ...node.model,
+          value: '',
           raw: node,
         })
         const idx = shapedTree.length - 1
