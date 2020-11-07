@@ -1,20 +1,22 @@
 <template>
   <div>
-    <div class="arrow">
-      <div class="if-box">
-        <input
-          v-if="inputMode"
-          class="if-inner"
-          type="text"
-          :name="name"
-          :value="defaultValue"
-          placeholder="条件を入力"
-          maxlength="16"
-          @input="onChange"
-        />
-        <span v-else class="if-inner">{{ value }}</span>
+    <div class="parent">
+      <div class="arrow">
+        <div class="if-box">
+          <input
+            v-if="inputMode"
+            class="if-inner"
+            type="text"
+            :name="name"
+            :value="defaultValue"
+            placeholder="条件を入力"
+            maxlength="16"
+            @input="onChange"
+          />
+          <span v-else class="if-inner">{{ value }}</span>
+        </div>
+        <div class="arrow-side" />
       </div>
-      <div class="arrow-side" />
     </div>
   </div>
 </template>
@@ -53,6 +55,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.parent {
+  width: 252px;
+}
+
 .if {
   &-box {
     display: inline-flex;
@@ -131,30 +137,19 @@ export default {
   &-side {
     position: absolute;
     top: 50px;
-    right: -148px;
-    width: 150px;
+    right: -47px;
+    width: 50px;
     height: 1px;
     background: $black;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      display: inline-block;
-      width: 1px;
-      height: 73px;
-      background: $black;
-    }
 
     &::after {
       content: '';
       position: absolute;
-      right: -4.5px;
-      bottom: -79px;
+      top: -5px;
+      right: -10px;
       display: inline-block;
       border: 5px solid transparent;
-      border-top: 5px solid $black;
+      border-left: 5px solid $black;
     }
   }
 }
