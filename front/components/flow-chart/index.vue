@@ -1,5 +1,13 @@
 <template>
   <div>
+    <Tester
+      :tree="shapedTree"
+      @addProcessNode="addProcessNode"
+      @addChildProcessNode="addChildProcessNode"
+      @addIfNode="addIfNode"
+      @addChildIfNode="addChildIfNode"
+      @removeNode="removeNode"
+    />
     <Renderer
       :tree="shapedTree"
       @addProcessNode="addProcessNode"
@@ -16,10 +24,12 @@
 import TreeModel from 'tree-model'
 import { TreeTypes } from '~/components/flow-chart/tree-types.js'
 import Renderer from '~/components/flow-chart/renderer.vue'
+import Tester from '~/components/flow-chart/tester.vue'
 
 export default {
   components: {
     Renderer,
+    Tester,
   },
   data() {
     return {
