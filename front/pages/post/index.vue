@@ -29,7 +29,9 @@
             />
           </div>
           <div>デートの流れ</div>
-          <FlowChart ref="flowChart" />
+          <div class="flow-chart">
+            <FlowChart ref="flowChart" />
+          </div>
         </div>
       </form>
     </div>
@@ -192,6 +194,13 @@ export default {
     font-size: 14px;
     text-align: center;
     margin: 0 0 20px;
+  }
+}
+
+.flow {
+  &-chart {
+    overflow-y: scroll;
+    margin: 0 0 20px 20px;
   }
 }
 </style>

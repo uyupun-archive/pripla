@@ -1,68 +1,69 @@
 <template>
   <div>
-    <div
-      v-for="node in tree"
-      :key="node.id"
-      :class="{
-        edge: [treeTypes.begin, treeTypes.end].includes(node.type),
-        process: node.type === treeTypes.process,
-        if: node.type === treeTypes.if,
-      }"
-      class="node"
-    >
-      <div>{{ node.name }}</div>
-      <button
-        v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
-        type="button"
-        @click="addProcessNode(node.raw)"
+    <div v-for="node in tree" :key="node.id" class="flexbox">
+      <div class="relative">
+        <EdgeNode v-if="node.type === treeTypes.begin" :begin-node="true">
+          集合
+        </EdgeNode>
+        <EdgeNode v-if="node.type === treeTypes.end">解散</EdgeNode>
+        <ProcessNode
+          v-if="node.type === treeTypes.process"
+          @input="onChangeProcessNode"
+        />
+        <IfNode v-if="node.type === treeTypes.if" @input="onChangeIfNode" />
+        <Fa
+          v-if="[treeTypes.process, treeTypes.if].includes(node.type)"
+          icon="times"
+          class="btn btn-times"
+          @click="removeNode(node.raw)"
+        />
+        <div
+          v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
+          class="btns"
+        >
+          <Fa icon="plus" class="btn" @click="addProcessNode(node.raw)" />
+          <Fa
+            v-if="!searchIfNode()"
+            icon="code-branch"
+            class="btn"
+            @click="addIfNode(node.raw)"
+          />
+        </div>
+        <div v-if="node.type === treeTypes.if" class="btns">
+          <div class="btns-item">
+            <Fa icon="plus" class="btn" @click="addProcessNode(node.raw)" />
+            <Fa
+              v-if="!searchIfNode()"
+              icon="code-branch"
+              class="btn"
+              @click="addIfNode(node.raw)"
+            />
+          </div>
+          <div class="btns-item">
+            <Fa
+              icon="plus"
+              class="btn"
+              @click="addChildProcessNode(node.raw)"
+            />
+            <Fa
+              icon="code-branch"
+              class="btn"
+              @click="addChildIfNode(node.raw)"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="node.children.length > 0"
+        :style="{
+          padding: `${
+            node.children[0].type === treeTypes.if ? '0' : '20px 0 0'
+          }`,
+        }"
       >
-        +
-      </button>
-      <button
-        v-if="[treeTypes.process, treeTypes.if].includes(node.type)"
-        type="button"
-        @click="removeNode(node.raw)"
-      >
-        -
-      </button>
-      <button
-        v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
-        type="button"
-        @click="addIfNode(node.raw)"
-      >
-        if
-      </button>
-      <button
-        v-if="node.type === treeTypes.if"
-        type="button"
-        @click="addProcessNode(node.raw)"
-      >
-        Yes
-      </button>
-      <button
-        v-if="node.type === treeTypes.if"
-        type="button"
-        @click="addChildProcessNode(node.raw)"
-      >
-        No
-      </button>
-      <button
-        v-if="node.type === treeTypes.if"
-        type="button"
-        @click="addIfNode(node.raw)"
-      >
-        Yes if
-      </button>
-      <button
-        v-if="node.type === treeTypes.if"
-        type="button"
-        @click="addChildIfNode(node.raw)"
-      >
-        No if
-      </button>
-      <div v-if="node.children.length > 0">
         <Renderer
           :tree="node.children"
+          :tier="tier + 1"
           @addProcessNode="addProcessNode"
           @addChildProcessNode="addChildProcessNode"
           @addIfNode="addIfNode"
@@ -76,17 +77,27 @@
 
 <script>
 import Renderer from '~/components/flow-chart/renderer.vue'
+import EdgeNode from '~/components/nodes/edge.vue'
+import IfNode from '~/components/nodes/if.vue'
+import ProcessNode from '~/components/nodes/process.vue'
 import { TreeTypes } from '~/components/flow-chart/tree-types.js'
 
 export default {
   name: 'Renderer',
   components: {
     Renderer,
+    EdgeNode,
+    IfNode,
+    ProcessNode,
   },
   props: {
     tree: {
       type: Array,
       required: true,
+    },
+    tier: {
+      type: Number,
+      default: 1,
     },
   },
   data() {
@@ -95,42 +106,80 @@ export default {
     }
   },
   methods: {
+    searchIfNode() {
+      let flag = false
+      this.tree.map((node) => {
+        if (node.type === this.treeTypes.if) flag = true
+      })
+      console.log(flag)
+      return flag
+    },
     addProcessNode(raw) {
+      console.log('addProcessNode')
       this.$emit('addProcessNode', raw)
     },
     addChildProcessNode(raw) {
+      console.log('addChildProcessNode')
       this.$emit('addChildProcessNode', raw)
     },
     addIfNode(raw) {
+      console.log('addIfNode')
       this.$emit('addIfNode', raw)
     },
     addChildIfNode(raw) {
+      console.log('addChildIfNode')
       this.$emit('addChildIfNode', raw)
     },
     removeNode(raw) {
+      console.log('removeNode')
       this.$emit('removeNode', raw)
+    },
+    onChangeProcessNode(e) {
+      console.log('onChangeProcessNode', e.target.value)
+    },
+    onChangeIfNode(e) {
+      console.log('onChangeIfNode', e.target.value)
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.edge {
-  border: 2px solid #000;
-  background-color: red;
+.btns {
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+
+  &-item {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+  }
 }
 
-.process {
-  border: 2px solid #000;
-  background-color: blue;
+.btn {
+  height: 25px;
+  outline: none;
+  border: none;
+  transform: rotate(180deg);
+  z-index: 100;
+
+  &-times {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+  }
 }
 
-.if {
-  border: 2px solid #000;
-  background-color: green;
+.flexbox {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: top;
 }
 
-.node {
-  margin-left: 20px;
+.relative {
+  position: relative;
 }
 </style>

@@ -70,6 +70,7 @@ export default {
       const childNode = this.treeModel.parse({
         id: ++this.latestId,
         name,
+        value: '',
         type,
       })
       const idx = selectedNode.getIndex() + 1
@@ -83,6 +84,7 @@ export default {
       const childNode = this.treeModel.parse({
         id: ++this.latestId,
         name,
+        value: '',
         type,
       })
       baseNode.addChild(childNode)
@@ -91,6 +93,9 @@ export default {
     removeNode(selectedNode) {
       selectedNode.drop()
       this.makeShapedTree()
+    },
+    setValue(node, value) {
+      node.value = value
     },
     makeShapedTree() {
       const rootNode = this.tree.first((node) => node.model.id === 1)
@@ -101,6 +106,7 @@ export default {
       for (const node of nodes) {
         shapedTree.push({
           ...node.model,
+          value: '',
           raw: node,
         })
         const idx = shapedTree.length - 1

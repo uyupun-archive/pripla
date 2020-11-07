@@ -26,11 +26,16 @@
             <Fa icon="user-friends" class="plan-detail__icon" />
             <span class="plan-detail__margin">{{ plan.target.name }}</span>
           </li>
+        </ul>
+      </div>
+      <div class="plan-detail">
+        <ul class="plan-list">
           <li class="plan-item">
             <Fa icon="plane" class="plan-detail__icon" />
             <span>デートの流れ</span>
           </li>
         </ul>
+        <div>{{ plan.flow_chart }}</div>
       </div>
     </div>
     <Loading v-if="loading" />

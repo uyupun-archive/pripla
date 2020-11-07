@@ -90,7 +90,7 @@ export default {
   background: $pink;
   outline: none;
   box-sizing: border-box;
-  padding: 13px 20px;
+  padding: 12px 20px;
   border: none;
   border-radius: 10px;
 
