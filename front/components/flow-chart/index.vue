@@ -7,6 +7,7 @@
       @addIfNode="addIfNode"
       @addChildIfNode="addChildIfNode"
       @removeNode="removeNode"
+      @setValue="setValue"
     />
   </div>
 </template>
