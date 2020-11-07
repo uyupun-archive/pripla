@@ -38,14 +38,16 @@ export default {
       const nodes = {
         id: 1,
         name: 'root',
+        value: '',
         type: this.treeTypes.root,
         children: [
           {
             id: 2,
             name: '集合',
+            value: '',
             type: this.treeTypes.begin,
           },
-          { id: 3, name: '解散', type: this.treeTypes.end },
+          { id: 3, name: '解散', value: '', type: this.treeTypes.end },
         ],
       }
       this.tree = this.treeModel.parse(nodes)
@@ -70,6 +72,7 @@ export default {
       const childNode = this.treeModel.parse({
         id: ++this.latestId,
         name,
+        value: '',
         type,
       })
       const idx = selectedNode.getIndex() + 1
@@ -83,6 +86,7 @@ export default {
       const childNode = this.treeModel.parse({
         id: ++this.latestId,
         name,
+        value: '',
         type,
       })
       baseNode.addChild(childNode)
