@@ -60,7 +60,6 @@ export default {
       }
       this.tree = this.treeModel.parse(nodes)
       this.latestId = 3
-      console.log(this.tree)
     },
     addProcessNode(selectedNode) {
       this.addNode(selectedNode, this.treeTypes.process, '行動を入力')
@@ -78,12 +77,7 @@ export default {
       const baseNode = this.tree.first(
         (node) => node.model.id === selectedNode.parent.model.id
       )
-      const childNode = this.treeModel.parse({
-        id: ++this.latestId,
-        name,
-        value: '',
-        type,
-      })
+      const childNode = this.makeParsedNode(type, name)
       const idx = selectedNode.getIndex() + 1
       baseNode.addChildAtIndex(childNode, idx)
     },
@@ -91,13 +85,16 @@ export default {
       const baseNode = this.tree.first(
         (node) => node.model.id === selectedNode.model.id
       )
-      const childNode = this.treeModel.parse({
+      const childNode = this.makeParsedNode(type, name)
+      baseNode.addChild(childNode)
+    },
+    makeParsedNode(type, name) {
+      return this.treeModel.parse({
         id: ++this.latestId,
         name,
         value: '',
         type,
       })
-      baseNode.addChild(childNode)
     },
     removeNode(selectedNode) {
       selectedNode.drop()
