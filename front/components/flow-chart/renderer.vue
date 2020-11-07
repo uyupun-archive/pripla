@@ -8,9 +8,12 @@
         <EdgeNode v-if="node.type === treeTypes.end">解散</EdgeNode>
         <ProcessNode
           v-if="node.type === treeTypes.process"
-          @input="onChangeProcessNode"
+          @input="onChangeProcessNode(node, $event)"
         />
-        <IfNode v-if="node.type === treeTypes.if" @input="onChangeIfNode" />
+        <IfNode
+          v-if="node.type === treeTypes.if"
+          @input="onChangeIfNode(node, $event)"
+        />
         <Fa
           v-if="[treeTypes.process, treeTypes.if].includes(node.type)"
           icon="times"
@@ -111,34 +114,28 @@ export default {
       this.tree.map((node) => {
         if (node.type === this.treeTypes.if) flag = true
       })
-      console.log(flag)
       return flag
     },
     addProcessNode(raw) {
-      console.log('addProcessNode')
       this.$emit('addProcessNode', raw)
     },
     addChildProcessNode(raw) {
-      console.log('addChildProcessNode')
       this.$emit('addChildProcessNode', raw)
     },
     addIfNode(raw) {
-      console.log('addIfNode')
       this.$emit('addIfNode', raw)
     },
     addChildIfNode(raw) {
-      console.log('addChildIfNode')
       this.$emit('addChildIfNode', raw)
     },
     removeNode(raw) {
-      console.log('removeNode')
       this.$emit('removeNode', raw)
     },
-    onChangeProcessNode(e) {
-      console.log('onChangeProcessNode', e.target.value)
+    onChangeProcessNode(node, e) {
+      this.$emit('setValue', node, e.target.value)
     },
-    onChangeIfNode(e) {
-      console.log('onChangeIfNode', e.target.value)
+    onChangeIfNode(node, e) {
+      this.$emit('setValue', node, e.target.value)
     },
   },
 }
