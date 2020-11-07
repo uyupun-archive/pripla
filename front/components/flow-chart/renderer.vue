@@ -1,16 +1,31 @@
 <template>
   <div>
+    <!--
+      edge: [treeTypes.begin, treeTypes.end].includes(node.type),
+      process: node.type === treeTypes.process,
+      if: node.type === treeTypes.if,
+    -->
     <div
       v-for="node in tree"
       :key="node.id"
-      :class="{
-        edge: [treeTypes.begin, treeTypes.end].includes(node.type),
-        process: node.type === treeTypes.process,
-        if: node.type === treeTypes.if,
-      }"
-      class="node"
+      class="relative"
+      :style="{ height: `${node.type === treeTypes.if ? 176 : 125}px` }"
     >
-      <div>{{ node.name }}</div>
+      <!-- <div>{{ node.name }}</div> -->
+      <EdgeNode v-if="node.type === treeTypes.end">解散</EdgeNode>
+      <div
+        :class="{ absolute: tier !== 1 }"
+        :style="{ left: `${250 * (tier - 1)}px` }"
+      >
+        <EdgeNode v-if="node.type === treeTypes.begin" :begin-node="true">
+          集合
+        </EdgeNode>
+        <ProcessNode
+          v-if="node.type === treeTypes.process"
+          @input="onChangeProcessNode"
+        />
+        <IfNode v-if="node.type === treeTypes.if" @input="onChangeIfNode" />
+      </div>
       <button
         v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
         type="button"
@@ -63,6 +78,7 @@
       <div v-if="node.children.length > 0">
         <Renderer
           :tree="node.children"
+          :tier="tier + 1"
           @addProcessNode="addProcessNode"
           @addChildProcessNode="addChildProcessNode"
           @addIfNode="addIfNode"
@@ -76,17 +92,27 @@
 
 <script>
 import Renderer from '~/components/flow-chart/renderer.vue'
+import EdgeNode from '~/components/nodes/edge.vue'
+import IfNode from '~/components/nodes/if.vue'
+import ProcessNode from '~/components/nodes/process.vue'
 import { TreeTypes } from '~/components/flow-chart/tree-types.js'
 
 export default {
   name: 'Renderer',
   components: {
     Renderer,
+    EdgeNode,
+    IfNode,
+    ProcessNode,
   },
   props: {
     tree: {
       type: Array,
       required: true,
+    },
+    tier: {
+      type: Number,
+      default: 1,
     },
   },
   data() {
@@ -110,6 +136,13 @@ export default {
     removeNode(raw) {
       this.$emit('removeNode', raw)
     },
+    onChangeProcessNode(e) {
+      console.log(this.tree)
+      console.log('onChangeProcessNode', e.target.value)
+    },
+    onChangeIfNode(e) {
+      console.log('onChangeIfNode', e.target.value)
+    },
   },
 }
 </script>
@@ -132,5 +165,15 @@ export default {
 
 .node {
   margin-left: 20px;
+}
+
+.relative {
+  position: relative;
+  top: 0;
+}
+
+.absolute {
+  position: absolute;
+  top: 0;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="edgenode" :class="{ arrow: firstNode }">
+    <div class="edgenode" :class="{ arrow: beginNode }">
       <slot />
     </div>
   </div>
@@ -9,7 +9,7 @@
 <script>
 export default {
   props: {
-    firstNode: {
+    beginNode: {
       type: Boolean,
       default: false,
     },
