@@ -1,14 +1,14 @@
 <template>
   <div>
     <Tester
-      :tree="shapedTree"
+      :tree="tree"
       @addProcessNode="addProcessNode"
       @addChildProcessNode="addChildProcessNode"
       @addIfNode="addIfNode"
       @addChildIfNode="addChildIfNode"
       @removeNode="removeNode"
     />
-    <Renderer
+    <!-- <Renderer
       :tree="shapedTree"
       @addProcessNode="addProcessNode"
       @addChildProcessNode="addChildProcessNode"
@@ -16,25 +16,25 @@
       @addChildIfNode="addChildIfNode"
       @removeNode="removeNode"
       @setValue="setValue"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
 import TreeModel from 'tree-model'
 import { TreeTypes } from '~/components/flow-chart/tree-types.js'
-import Renderer from '~/components/flow-chart/renderer.vue'
+// import Renderer from '~/components/flow-chart/renderer.vue'
 import Tester from '~/components/flow-chart/tester.vue'
 
 export default {
   components: {
-    Renderer,
+    // Renderer,
     Tester,
   },
   data() {
     return {
       treeModel: new TreeModel(),
-      tree: null,
+      tree: {},
       treeTypes: TreeTypes,
       latestId: 0,
       shapedTree: [],
@@ -42,7 +42,6 @@ export default {
   },
   mounted() {
     this.initTree()
-    this.makeShapedTree()
   },
   methods: {
     initTree() {
@@ -61,6 +60,7 @@ export default {
       }
       this.tree = this.treeModel.parse(nodes)
       this.latestId = 3
+      console.log(this.tree)
     },
     addProcessNode(selectedNode) {
       this.addNode(selectedNode, this.treeTypes.process, '行動を入力')
@@ -86,7 +86,6 @@ export default {
       })
       const idx = selectedNode.getIndex() + 1
       baseNode.addChildAtIndex(childNode, idx)
-      this.makeShapedTree()
     },
     addChildNode(selectedNode, type, name) {
       const baseNode = this.tree.first(
@@ -99,49 +98,34 @@ export default {
         type,
       })
       baseNode.addChild(childNode)
-      this.makeShapedTree()
     },
     removeNode(selectedNode) {
       selectedNode.drop()
-      this.makeShapedTree()
     },
     setValue(node, value) {
       node.value = value
     },
-    makeShapedTree() {
-      const rootNode = this.tree.first((node) => node.model.id === 1)
-      this.shapedTree = this.recursiveMakeShapedTree(rootNode.children)
-    },
-    recursiveMakeShapedTree(nodes) {
+    makeShapedTree(nodes) {
       const shapedTree = []
       for (const node of nodes) {
-        shapedTree.push({
-          ...node.model,
-          value: '',
-          raw: node,
-        })
-        const idx = shapedTree.length - 1
-        if (node.children.length > 0)
-          shapedTree[idx].children = this.recursiveMakeShapedTree(node.children)
-        else shapedTree[idx].children = []
+        const obj = {
+          id: node.id,
+          name: node.name,
+          type: node.type,
+          children: [],
+        }
+        if (
+          Object.prototype.hasOwnProperty.call(node, 'children') &&
+          node.children.length > 0
+        )
+          obj.children = this.makeShapedTree(node.children)
+        shapedTree.push(obj)
       }
       return shapedTree
     },
-    recursiveMakeJsonTree(tree) {
-      const jsonTree = []
-      for (const node of tree) {
-        delete node.raw
-        jsonTree.push(node)
-        const idx = jsonTree.length - 1
-        if (node.children.length > 0)
-          jsonTree[idx].children = this.recursiveMakeJsonTree(node.children)
-        else jsonTree[idx].children = []
-      }
-      return jsonTree
-    },
-    getJsonTree() {
-      const jsonTree = this.recursiveMakeJsonTree(this.shapedTree)
-      return jsonTree
+    getShapedTree() {
+      const shapedTree = this.makeShapedTree(this.tree.model.children)
+      return shapedTree
     },
   },
 }
