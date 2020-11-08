@@ -1,77 +1,89 @@
 <template>
-  <div>
-    <div v-for="node in tree" :key="node.id" class="flexbox">
-      <div class="relative">
-        <EdgeNode v-if="node.type === treeTypes.begin" :begin-node="true">
+  <div class="relative">
+    <div
+      v-for="(node, index) in tree.children"
+      :key="node.model.id"
+      class="absolute"
+      :style="{
+        top: `${calculateTop(index)}px`,
+        left: `${tier !== 1 ? 252 : 0}px`,
+      }"
+    >
+      <div>
+        <EdgeNode v-if="node.model.type === treeTypes.begin" :begin-node="true">
           集合
         </EdgeNode>
-        <EdgeNode v-if="node.type === treeTypes.end">解散</EdgeNode>
+        <EdgeNode v-if="node.model.type === treeTypes.end">解散</EdgeNode>
         <ProcessNode
-          v-if="node.type === treeTypes.process"
-          @input="onChangeProcessNode(node, $event)"
+          v-if="node.model.type === treeTypes.process"
+          :defalut-value="node.model.value"
+          @input="setValue({ node, event: $event })"
         />
         <IfNode
-          v-if="node.type === treeTypes.if"
-          @input="onChangeIfNode(node, $event)"
+          v-if="node.model.type === treeTypes.if"
+          :defalut-value="node.model.value"
+          @input="setValue({ node, event: $event })"
         />
         <Fa
-          v-if="[treeTypes.process, treeTypes.if].includes(node.type)"
+          v-if="[treeTypes.process, treeTypes.if].includes(node.model.type)"
           icon="times"
           class="btn btn-times"
-          @click="removeNode(node.raw)"
+          :style="{ right: `${node.model.type === treeTypes.if && 52}px` }"
+          @click="removeNode(node)"
         />
         <div
-          v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
+          v-if="[treeTypes.begin, treeTypes.process].includes(node.model.type)"
           class="btns"
         >
-          <Fa icon="plus" class="btn" @click="addProcessNode(node.raw)" />
-          <Fa
-            v-if="!searchIfNode()"
-            icon="code-branch"
-            class="btn"
-            @click="addIfNode(node.raw)"
-          />
-        </div>
-        <div v-if="node.type === treeTypes.if" class="btns">
-          <div class="btns-item">
-            <Fa icon="plus" class="btn" @click="addProcessNode(node.raw)" />
+          <span :style="{ widht: '100px' }">
+            <Fa icon="plus" class="btn" @click="addProcessNode(node)" />
+          </span>
+          <span :style="{ widht: '100px' }">
             <Fa
-              v-if="!searchIfNode()"
+              v-if="searchIfNodeIndex() === -1"
               icon="code-branch"
               class="btn"
-              @click="addIfNode(node.raw)"
+              @click="addIfNode(node)"
             />
+          </span>
+        </div>
+        <div v-if="node.model.type === treeTypes.if" class="btns">
+          <div class="btns-item">
+            <span />
+            <span>
+              <Fa icon="plus" class="btn" @click="addProcessNode(node)" />
+            </span>
           </div>
           <div class="btns-item">
-            <Fa
-              icon="plus"
-              class="btn"
-              @click="addChildProcessNode(node.raw)"
-            />
-            <Fa
-              icon="code-branch"
-              class="btn"
-              @click="addChildIfNode(node.raw)"
-            />
+            <span>
+              <Fa icon="plus" class="btn" @click="addChildProcessNode(node)" />
+            </span>
+            <span>
+              <Fa
+                icon="code-branch"
+                class="btn"
+                @click="addChildIfNode(node)"
+              />
+            </span>
           </div>
         </div>
       </div>
       <div
-        v-if="node.children.length > 0"
+        v-if="node.hasOwnProperty('children') && node.children.length > 0"
+        class="relative"
         :style="{
-          padding: `${
-            node.children[0].type === treeTypes.if ? '0' : '20px 0 0'
-          }`,
+          top: `${node.children[0].model.type === treeTypes.process && 20}px`,
         }"
       >
         <Renderer
-          :tree="node.children"
+          :tree="node"
           :tier="tier + 1"
           @addProcessNode="addProcessNode"
           @addChildProcessNode="addChildProcessNode"
           @addIfNode="addIfNode"
           @addChildIfNode="addChildIfNode"
           @removeNode="removeNode"
+          @setValue="setValue"
         />
       </div>
     </div>
@@ -95,7 +107,7 @@ export default {
   },
   props: {
     tree: {
-      type: Array,
+      type: Object,
       required: true,
     },
     tier: {
@@ -109,33 +121,40 @@ export default {
     }
   },
   methods: {
-    searchIfNode() {
-      let flag = false
-      this.tree.map((node) => {
-        if (node.type === this.treeTypes.if) flag = true
-      })
-      return flag
+    setValue(args) {
+      this.$emit('setValue', args)
     },
-    addProcessNode(raw) {
-      this.$emit('addProcessNode', raw)
+    addProcessNode(node) {
+      this.$emit('addProcessNode', node)
     },
-    addChildProcessNode(raw) {
-      this.$emit('addChildProcessNode', raw)
+    addChildProcessNode(node) {
+      this.$emit('addChildProcessNode', node)
     },
-    addIfNode(raw) {
-      this.$emit('addIfNode', raw)
+    addIfNode(node) {
+      this.$emit('addIfNode', node)
     },
-    addChildIfNode(raw) {
-      this.$emit('addChildIfNode', raw)
+    addChildIfNode(node) {
+      this.$emit('addChildIfNode', node)
     },
-    removeNode(raw) {
-      this.$emit('removeNode', raw)
+    removeNode(node) {
+      this.$emit('removeNode', node)
     },
-    onChangeProcessNode(node, e) {
-      this.$emit('setValue', node, e.target.value)
+    searchIfNodeIndex() {
+      return this.tree.children.findIndex(
+        (node, index) => node.model.type === this.treeTypes.if
+      )
     },
-    onChangeIfNode(node, e) {
-      this.$emit('setValue', node, e.target.value)
+    calculateTop(index) {
+      const ifNodeIndex = this.searchIfNodeIndex()
+      if (ifNodeIndex === -1 && this.tier === 1) {
+        return 95 * index
+      } else if (ifNodeIndex !== -1 && this.tier === 1) {
+        return ifNodeIndex < index ? 95 * (index - 1) + 137.5 : 95 * index
+      } else if (ifNodeIndex === -1 && this.tier !== 1) {
+        return 95 * index - 137.5
+      } else {
+        return ifNodeIndex < index ? 95 * (index - 1) : 95 * index - 137.5
+      }
     },
   },
 }
@@ -143,16 +162,44 @@ export default {
 
 <style lang="scss" scoped>
 .btns {
+  position: absolute;
+  bottom: 10px;
   display: inline-flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
+  width: 200px;
+
+  & span {
+    width: 50%;
+
+    &:first-of-type {
+      text-align: right;
+      padding-right: 20px;
+    }
+
+    &:last-of-type {
+      padding-left: 20px;
+    }
+  }
 
   &-item {
-    display: flex;
+    display: inline-flex;
     justify-content: space-around;
     align-items: center;
     width: 50%;
+
+    & span {
+      width: 50%;
+
+      &:first-of-type {
+        text-align: right;
+        padding-right: 10px;
+      }
+
+      &:last-of-type {
+        padding-left: 10px;
+      }
+    }
   }
 }
 
@@ -166,7 +213,7 @@ export default {
   &-times {
     position: absolute;
     top: -10px;
-    right: -10px;
+    right: 0;
   }
 }
 
@@ -178,5 +225,11 @@ export default {
 
 .relative {
   position: relative;
+  top: 0;
+  left: 0;
+}
+
+.absolute {
+  position: absolute;
 }
 </style>

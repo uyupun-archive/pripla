@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Tester
+    <!-- <Tester
       :tree="tree"
       @setValue="setValue"
       @addProcessNode="addProcessNode"
@@ -8,29 +8,29 @@
       @addIfNode="addIfNode"
       @addChildIfNode="addChildIfNode"
       @removeNode="removeNode"
-    />
-    <!-- <Renderer
-      :tree="shapedTree"
+    /> -->
+    <Renderer
+      :tree="tree"
       @addProcessNode="addProcessNode"
       @addChildProcessNode="addChildProcessNode"
       @addIfNode="addIfNode"
       @addChildIfNode="addChildIfNode"
       @removeNode="removeNode"
       @setValue="setValue"
-    /> -->
+    />
   </div>
 </template>
 
 <script>
 import TreeModel from 'tree-model'
 import { TreeTypes } from '~/components/flow-chart/tree-types.js'
-// import Renderer from '~/components/flow-chart/renderer.vue'
-import Tester from '~/components/flow-chart/tester.vue'
+import Renderer from '~/components/flow-chart/renderer.vue'
+// import Tester from '~/components/flow-chart/tester.vue'
 
 export default {
   components: {
-    // Renderer,
-    Tester,
+    Renderer,
+    // Tester,
   },
   data() {
     return {
