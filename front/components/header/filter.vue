@@ -69,17 +69,13 @@ export default {
     display: block;
     padding: 15px;
     border-bottom: 2px solid $gray;
-    opacity: 1;
-    z-index: 1;
+    z-index: -1;
     transform: translateY(0px);
-    transition: all 0.2s;
+    transition: all 0.3s;
 
     &__active {
       overflow: hidden;
-      padding: none;
-      max-height: 1;
-      opacity: 0;
-      z-index: -1;
+      z-index: -10;
       transform: translateY(-300px);
     }
   }
