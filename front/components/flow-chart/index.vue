@@ -64,8 +64,8 @@ export default {
       this.latestId = 3
     },
     setValue(args) {
-      const { node, value } = args
-      node.model.value = value
+      const { node, event } = args
+      node.model.value = event.target.value
     },
     addProcessNode(selectedNode) {
       this.addNode(selectedNode, this.treeTypes.process, '行動を入力')
@@ -118,8 +118,10 @@ export default {
         if (
           Object.prototype.hasOwnProperty.call(node, 'children') &&
           node.children.length > 0
-        )
+        ) {
           obj.children = this.makeShapedTree(node.children)
+          console.log(node)
+        }
         shapedTree.push(obj)
       }
       return shapedTree

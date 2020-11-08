@@ -16,7 +16,7 @@
           v-if="[treeTypes.process, treeTypes.if].includes(node.model.type)"
           type="text"
           :value="node.model.value"
-          @change="setValue(node, $event)"
+          @change="setValue({ node, event: $event })"
         />
       </div>
       <button
@@ -104,8 +104,8 @@ export default {
     }
   },
   methods: {
-    setValue(node, event) {
-      this.$emit('setValue', { node, value: event.target.value })
+    setValue(args) {
+      this.$emit('setValue', args)
     },
     addProcessNode(node) {
       this.$emit('addProcessNode', node)
