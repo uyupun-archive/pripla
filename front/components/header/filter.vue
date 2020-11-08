@@ -25,7 +25,7 @@
 export default {
   data() {
     return {
-      showFilterPanel: false,
+      showFilterPanel: true,
     }
   },
   methods: {
@@ -53,7 +53,8 @@ export default {
     cursor: pointer;
     padding: 10px 15px;
     border-bottom: 1px solid $gray;
-    z-index: 2;
+    background-color: $white;
+    z-index: 50;
   }
 
   &-text {
@@ -62,6 +63,8 @@ export default {
   }
 
   &-panel {
+    background: $white;
+    margin-bottom: -300px;
     position: relative;
     display: block;
     padding: 15px;
@@ -69,7 +72,7 @@ export default {
     opacity: 1;
     z-index: 1;
     transform: translateY(0px);
-    transition: all 0.3s;
+    transition: all 0.2s;
 
     &__active {
       overflow: hidden;
@@ -77,7 +80,7 @@ export default {
       max-height: 1;
       opacity: 0;
       z-index: -1;
-      transform: translateY(-30px);
+      transform: translateY(-300px);
     }
   }
 
