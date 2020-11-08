@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="edgenode" :class="{ arrow: beginNode }">
+    <div class="edge-node" :class="{ arrow: beginNode }">
       <slot />
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.edgenode {
+.edge-node {
   width: 200px;
   padding: 13px 20px;
   border-radius: 50px;
