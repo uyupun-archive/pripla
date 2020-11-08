@@ -16,6 +16,7 @@
             name="target"
             :value="String(target.id)"
             :text="target.name"
+            :checked="target.id === 1"
           />
         </div>
         <div class="form-btn">

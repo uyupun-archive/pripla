@@ -6,6 +6,7 @@
       :name="name"
       :value="value"
       :placeholder="placeholder"
+      @input="detectChangedValue($event)"
     />
   </div>
 </template>
@@ -24,6 +25,15 @@ export default {
     placeholder: {
       type: String,
       default: '',
+    },
+    validator: {
+      type: Function,
+      default: () => {},
+    },
+  },
+  methods: {
+    detectChangedValue(event) {
+      this.validator(event.target.value)
     },
   },
 }
