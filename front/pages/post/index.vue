@@ -42,7 +42,7 @@
               :checked="target.id === 1"
             />
           </div>
-          <div>デートの流れ</div>
+          <div class="flow-text">デートの流れ</div>
           <div class="flow-chart">
             <FlowChart ref="flowChart" />
           </div>
@@ -58,7 +58,7 @@ import TextBox from '~/components/form/textbox.vue'
 import SelectBox from '~/components/form/select.vue'
 import RadioButton from '~/components/form/radio.vue'
 import Button from '~/components/button/index.vue'
-import FlowChart from '~/components/flow-chart/index.vue'
+import FlowChart from '~/components/flow-chart/builder.vue'
 import Loading from '~/components/loading/index.vue'
 
 export default {
@@ -235,10 +235,15 @@ export default {
 }
 
 .flow {
+  &-text {
+    margin: 0 0 10px;
+  }
+
   &-chart {
     overflow: scroll;
-    height: 350px;
-    margin: 0 0 20px 20px;
+    height: calc(100vh - 340px);
+    min-height: 350px;
+    margin: 0 15px 15px;
   }
 }
 </style>

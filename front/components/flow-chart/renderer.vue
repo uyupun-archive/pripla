@@ -16,23 +16,31 @@
         <EdgeNode v-if="node.model.type === treeTypes.end">解散</EdgeNode>
         <ProcessNode
           v-if="node.model.type === treeTypes.process"
-          :defalut-value="node.model.value"
+          :default-value="node.model.value"
+          :input-mode="inputMode"
           @input="setValue({ node, event: $event })"
         />
         <IfNode
           v-if="node.model.type === treeTypes.if"
-          :defalut-value="node.model.value"
+          :default-value="node.model.value"
+          :input-mode="inputMode"
           @input="setValue({ node, event: $event })"
         />
         <Fa
-          v-if="[treeTypes.process, treeTypes.if].includes(node.model.type)"
+          v-if="
+            [treeTypes.process, treeTypes.if].includes(node.model.type) &&
+            inputMode
+          "
           icon="times"
           class="btn btn-times"
           :style="{ right: `${node.model.type === treeTypes.if && 52}px` }"
           @click="removeNode(node)"
         />
         <div
-          v-if="[treeTypes.begin, treeTypes.process].includes(node.model.type)"
+          v-if="
+            [treeTypes.begin, treeTypes.process].includes(node.model.type) &&
+            inputMode
+          "
           class="btns"
         >
           <span :style="{ widht: '100px' }">
@@ -47,7 +55,7 @@
             />
           </span>
         </div>
-        <div v-if="node.model.type === treeTypes.if" class="btns">
+        <div v-if="node.model.type === treeTypes.if && inputMode" class="btns">
           <div class="btns-item">
             <span />
             <span>
@@ -78,6 +86,7 @@
         <Renderer
           :tree="node"
           :tier="tier + 1"
+          :input-mode="inputMode"
           @addProcessNode="addProcessNode"
           @addChildProcessNode="addChildProcessNode"
           @addIfNode="addIfNode"
@@ -92,18 +101,18 @@
 
 <script>
 import Renderer from '~/components/flow-chart/renderer.vue'
-import EdgeNode from '~/components/nodes/edge.vue'
-import IfNode from '~/components/nodes/if.vue'
-import ProcessNode from '~/components/nodes/process.vue'
 import { TreeTypes } from '~/components/flow-chart/tree-types.js'
+import EdgeNode from '~/components/nodes/edge.vue'
+import ProcessNode from '~/components/nodes/process.vue'
+import IfNode from '~/components/nodes/if.vue'
 
 export default {
   name: 'Renderer',
   components: {
     Renderer,
     EdgeNode,
-    IfNode,
     ProcessNode,
+    IfNode,
   },
   props: {
     tree: {
@@ -113,6 +122,10 @@ export default {
     tier: {
       type: Number,
       default: 1,
+    },
+    inputMode: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
