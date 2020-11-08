@@ -25,7 +25,7 @@
 export default {
   data() {
     return {
-      showFilterPanel: true,
+      showFilterPanel: false,
     }
   },
   methods: {
@@ -51,9 +51,9 @@ export default {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    background-color: $white;
     padding: 10px 15px;
     border-bottom: 1px solid $gray;
-    background-color: $white;
   }
 
   &-text {
@@ -61,20 +61,19 @@ export default {
   }
 
   &-panel {
-    background: $white;
-    margin-bottom: -300px;
     position: relative;
     display: block;
+    background: $white;
+    z-index: -1;
+    overflow: hidden;
+    transform: translateY(-300px);
+    transition: all 0.3s;
     padding: 15px;
     border-bottom: 2px solid $gray;
-    z-index: -1;
-    transform: translateY(0px);
-    transition: all 0.3s;
+    margin-bottom: -300px;
 
     &__active {
-      overflow: hidden;
-      z-index: -10;
-      transform: translateY(-300px);
+      transform: translateY(0);
     }
   }
 
