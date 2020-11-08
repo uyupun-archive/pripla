@@ -1,68 +1,77 @@
 <template>
   <div>
     <div
-      v-for="node in tree"
-      :key="node.id"
+      v-for="node in tree.children"
+      :key="node.model.id"
       :class="{
-        edge: [treeTypes.begin, treeTypes.end].includes(node.type),
-        process: node.type === treeTypes.process,
-        if: node.type === treeTypes.if,
+        edge: [treeTypes.begin, treeTypes.end].includes(node.model.type),
+        process: node.model.type === treeTypes.process,
+        if: node.model.type === treeTypes.if,
       }"
       class="node"
     >
-      <div>{{ node.name }}</div>
+      <div>{{ node.model.name }}</div>
+      <div>
+        <input
+          v-if="[treeTypes.process, treeTypes.if].includes(node.model.type)"
+          type="text"
+          :value="node.model.value"
+          @change="setValue({ node, event: $event })"
+        />
+      </div>
       <button
-        v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
+        v-if="[treeTypes.begin, treeTypes.process].includes(node.model.type)"
         type="button"
-        @click="addProcessNode(node.raw)"
+        @click="addProcessNode(node)"
       >
         +
       </button>
       <button
-        v-if="[treeTypes.process, treeTypes.if].includes(node.type)"
+        v-if="[treeTypes.process, treeTypes.if].includes(node.model.type)"
         type="button"
-        @click="removeNode(node.raw)"
+        @click="removeNode(node)"
       >
         -
       </button>
       <button
-        v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
+        v-if="[treeTypes.begin, treeTypes.process].includes(node.model.type)"
         type="button"
-        @click="addIfNode(node.raw)"
+        @click="addIfNode(node)"
       >
         if
       </button>
       <button
-        v-if="node.type === treeTypes.if"
+        v-if="node.model.type === treeTypes.if"
         type="button"
-        @click="addProcessNode(node.raw)"
+        @click="addProcessNode(node)"
       >
         Yes
       </button>
       <button
-        v-if="node.type === treeTypes.if"
+        v-if="node.model.type === treeTypes.if"
         type="button"
-        @click="addChildProcessNode(node.raw)"
+        @click="addChildProcessNode(node)"
       >
         No
       </button>
       <button
-        v-if="node.type === treeTypes.if"
+        v-if="node.model.type === treeTypes.if"
         type="button"
-        @click="addIfNode(node.raw)"
+        @click="addIfNode(node)"
       >
         Yes if
       </button>
       <button
-        v-if="node.type === treeTypes.if"
+        v-if="node.model.type === treeTypes.if"
         type="button"
-        @click="addChildIfNode(node.raw)"
+        @click="addChildIfNode(node)"
       >
         No if
       </button>
-      <div v-if="node.children.length > 0">
+      <div v-if="node.hasOwnProperty('children') && node.children.length > 0">
         <Tester
-          :tree="node.children"
+          :tree="node"
+          @setValue="setValue"
           @addProcessNode="addProcessNode"
           @addChildProcessNode="addChildProcessNode"
           @addIfNode="addIfNode"
@@ -85,7 +94,7 @@ export default {
   },
   props: {
     tree: {
-      type: Array,
+      type: Object,
       required: true,
     },
   },
@@ -95,20 +104,23 @@ export default {
     }
   },
   methods: {
-    addProcessNode(raw) {
-      this.$emit('addProcessNode', raw)
+    setValue(args) {
+      this.$emit('setValue', args)
     },
-    addChildProcessNode(raw) {
-      this.$emit('addChildProcessNode', raw)
+    addProcessNode(node) {
+      this.$emit('addProcessNode', node)
     },
-    addIfNode(raw) {
-      this.$emit('addIfNode', raw)
+    addChildProcessNode(node) {
+      this.$emit('addChildProcessNode', node)
     },
-    addChildIfNode(raw) {
-      this.$emit('addChildIfNode', raw)
+    addIfNode(node) {
+      this.$emit('addIfNode', node)
     },
-    removeNode(raw) {
-      this.$emit('removeNode', raw)
+    addChildIfNode(node) {
+      this.$emit('addChildIfNode', node)
+    },
+    removeNode(node) {
+      this.$emit('removeNode', node)
     },
   },
 }

@@ -141,7 +141,7 @@ export default {
         prefecture_id: Number(e.target.prefecture.value),
         budget_id: Number(e.target.budget.value),
         target_id: Number(e.target.target.value),
-        flow_chart: this.$refs.flowChart.getJsonTree(),
+        flow_chart: this.$refs.flowChart.getShapedTree(),
       }
       this.loading = true
       this.post(payload).finally(() => {
