@@ -11,12 +11,12 @@
     /> -->
     <Renderer
       :tree="tree"
+      @setValue="setValue"
       @addProcessNode="addProcessNode"
       @addChildProcessNode="addChildProcessNode"
       @addIfNode="addIfNode"
       @addChildIfNode="addChildIfNode"
       @removeNode="removeNode"
-      @setValue="setValue"
     />
   </div>
 </template>
@@ -26,7 +26,6 @@ import TreeModel from 'tree-model'
 import { TreeTypes } from '~/components/flow-chart/tree-types.js'
 import Renderer from '~/components/flow-chart/renderer.vue'
 // import Tester from '~/components/flow-chart/tester.vue'
-import { getTree } from '~/components/flow-chart/tree.js'
 
 export default {
   components: {
@@ -47,7 +46,21 @@ export default {
   },
   methods: {
     initTree() {
-      this.tree = getTree()
+      this.tree = this.treeModel.parse({
+        id: 1,
+        name: 'root',
+        value: '',
+        type: TreeTypes.root,
+        children: [
+          {
+            id: 2,
+            name: '集合',
+            value: '',
+            type: TreeTypes.begin,
+          },
+          { id: 3, name: '解散', value: '', type: TreeTypes.end },
+        ],
+      })
       this.latestId = 3
     },
     setValue(args) {
@@ -92,27 +105,23 @@ export default {
     removeNode(selectedNode) {
       selectedNode.drop()
     },
-    makeShapedTree(nodes) {
-      const shapedTree = []
-      for (const node of nodes) {
-        const obj = {
-          id: node.id,
-          name: node.name,
-          value: node.value,
-          type: node.type,
-          children: [],
-        }
-        if (
-          Object.prototype.hasOwnProperty.call(node, 'children') &&
-          node.children.length > 0
-        )
-          obj.children = this.makeShapedTree(node.children)
-        shapedTree.push(obj)
+    makeShapedTree(node) {
+      const shapedTree = {
+        id: node.model.id,
+        name: node.model.name,
+        value: node.model.value,
+        type: node.model.type,
+        children: [],
+      }
+      for (const child of node.children) {
+        const tmp = this.makeShapedTree(child)
+        shapedTree.children.push(tmp)
       }
       return shapedTree
     },
     getShapedTree() {
-      const shapedTree = this.makeShapedTree(this.tree.model.children)
+      const shapedTree = this.makeShapedTree(this.tree)
+      console.log(shapedTree)
       return shapedTree
     },
   },

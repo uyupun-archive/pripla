@@ -101,18 +101,18 @@
 
 <script>
 import Renderer from '~/components/flow-chart/renderer.vue'
-import EdgeNode from '~/components/nodes/edge.vue'
-import IfNode from '~/components/nodes/if.vue'
-import ProcessNode from '~/components/nodes/process.vue'
 import { TreeTypes } from '~/components/flow-chart/tree-types.js'
+import EdgeNode from '~/components/nodes/edge.vue'
+import ProcessNode from '~/components/nodes/process.vue'
+import IfNode from '~/components/nodes/if.vue'
 
 export default {
   name: 'Renderer',
   components: {
     Renderer,
     EdgeNode,
-    IfNode,
     ProcessNode,
+    IfNode,
   },
   props: {
     tree: {

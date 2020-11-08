@@ -36,7 +36,10 @@
           </li>
         </ul>
         <div class="flow-chart">
-          <Renderer :tree="getPlanTree(plan.flow_chart)" :input-mode="false" />
+          <Renderer
+            :tree="parseTreeModel(plan.flow_chart)"
+            :input-mode="false"
+          />
         </div>
       </div>
     </div>
@@ -45,9 +48,9 @@
 </template>
 
 <script>
+import TreeModel from 'tree-model'
 import Loading from '~/components/loading/index.vue'
 import Renderer from '~/components/flow-chart/renderer.vue'
-import { getTree } from '~/components/flow-chart/tree.js'
 
 export default {
   components: {
@@ -84,8 +87,11 @@ export default {
           this.$router.push('/404')
         })
     },
-    getPlanTree(shapedTree) {
-      return getTree(shapedTree)
+    parseTreeModel(tree) {
+      console.log(tree)
+      const treeModel = new TreeModel()
+      console.log(treeModel.parse(tree))
+      return treeModel.parse(tree)
     },
   },
 }
