@@ -54,17 +54,17 @@ export default {
   position: relative;
   display: inline-block;
   width: 200px;
-  margin: 0 0 35px;
+  margin: 0 0 55px;
 
   &::before {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: -30px;
+    bottom: -50px;
     transform: translateX(-50%);
     display: inline-block;
     width: 1px;
-    height: 30px;
+    height: 50px;
     background: $black;
   }
 
@@ -72,7 +72,7 @@ export default {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: -40px;
+    bottom: -60px;
     transform: translateX(-50%);
     display: inline-block;
     border: 5px solid transparent;

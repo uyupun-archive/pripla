@@ -28,42 +28,51 @@
           v-if="[treeTypes.process, treeTypes.if].includes(node.model.type)"
           icon="times"
           class="btn btn-times"
+          :style="{ right: `${node.model.type === treeTypes.if && 52}px` }"
           @click="removeNode(node)"
         />
         <div
           v-if="[treeTypes.begin, treeTypes.process].includes(node.model.type)"
           class="btns"
         >
-          <Fa icon="plus" class="btn" @click="addProcessNode(node)" />
-          <Fa
-            v-if="searchIfNodeIndex() === -1"
-            icon="code-branch"
-            class="btn"
-            @click="addIfNode(node)"
-          />
-        </div>
-        <div v-if="node.model.type === treeTypes.if" class="btns">
-          <div class="btns-item">
+          <span :style="{ widht: '100px' }">
             <Fa icon="plus" class="btn" @click="addProcessNode(node)" />
+          </span>
+          <span :style="{ widht: '100px' }">
             <Fa
               v-if="searchIfNodeIndex() === -1"
               icon="code-branch"
               class="btn"
               @click="addIfNode(node)"
             />
+          </span>
+        </div>
+        <div v-if="node.model.type === treeTypes.if" class="btns">
+          <div class="btns-item">
+            <span />
+            <span>
+              <Fa icon="plus" class="btn" @click="addProcessNode(node)" />
+            </span>
           </div>
           <div class="btns-item">
-            <Fa icon="plus" class="btn" @click="addChildProcessNode(node)" />
-            <Fa icon="code-branch" class="btn" @click="addChildIfNode(node)" />
+            <span>
+              <Fa icon="plus" class="btn" @click="addChildProcessNode(node)" />
+            </span>
+            <span>
+              <Fa
+                icon="code-branch"
+                class="btn"
+                @click="addChildIfNode(node)"
+              />
+            </span>
           </div>
         </div>
       </div>
       <div
         v-if="node.hasOwnProperty('children') && node.children.length > 0"
+        class="relative"
         :style="{
-          padding: `${
-            node.children[0].model.type === treeTypes.if ? '0' : '20px 0 0'
-          }`,
+          top: `${node.children[0].model.type === treeTypes.process && 20}px`,
         }"
       >
         <Renderer
@@ -138,13 +147,13 @@ export default {
     calculateTop(index) {
       const ifNodeIndex = this.searchIfNodeIndex()
       if (ifNodeIndex === -1 && this.tier === 1) {
-        return 105 * index
+        return 95 * index
       } else if (ifNodeIndex !== -1 && this.tier === 1) {
-        return ifNodeIndex < index ? 105 * (index - 1) + 147.5 : 105 * index
+        return ifNodeIndex < index ? 95 * (index - 1) + 137.5 : 95 * index
       } else if (ifNodeIndex === -1 && this.tier !== 1) {
-        return 105 * index - 147.5
+        return 95 * index - 137.5
       } else {
-        return ifNodeIndex < index ? 105 * (index - 1) : 105 * index - 147.5
+        return ifNodeIndex < index ? 95 * (index - 1) : 95 * index - 137.5
       }
     },
   },
@@ -153,16 +162,44 @@ export default {
 
 <style lang="scss" scoped>
 .btns {
+  position: absolute;
+  bottom: 10px;
   display: inline-flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
+  width: 200px;
+
+  & span {
+    width: 50%;
+
+    &:first-of-type {
+      text-align: right;
+      padding-right: 20px;
+    }
+
+    &:last-of-type {
+      padding-left: 20px;
+    }
+  }
 
   &-item {
-    display: flex;
+    display: inline-flex;
     justify-content: space-around;
     align-items: center;
     width: 50%;
+
+    & span {
+      width: 50%;
+
+      &:first-of-type {
+        text-align: right;
+        padding-right: 10px;
+      }
+
+      &:last-of-type {
+        padding-left: 10px;
+      }
+    }
   }
 }
 
@@ -176,7 +213,7 @@ export default {
   &-times {
     position: absolute;
     top: -10px;
-    right: -10px;
+    right: 0;
   }
 }
 

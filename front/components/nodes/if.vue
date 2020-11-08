@@ -109,17 +109,17 @@ export default {
   left: 0;
   display: inline-block;
   width: 200px;
-  margin: -8.5px 0 26px;
+  margin: -8.5px 0 46px;
 
   &::before {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: -21px;
+    bottom: -41px;
     transform: translateX(-50%);
     display: inline-block;
     width: 1px;
-    height: 30px;
+    height: 50px;
     background: $black;
   }
 
@@ -127,7 +127,7 @@ export default {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: -31px;
+    bottom: -51px;
     transform: translateX(-50%);
     display: inline-block;
     border: 5px solid transparent;
