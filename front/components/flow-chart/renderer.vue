@@ -1,8 +1,8 @@
 <template>
   <div class="relative">
     <div
-      v-for="(node, index) in tree"
-      :key="node.id"
+      v-for="(node, index) in tree.children"
+      :key="node.model.id"
       class="absolute"
       :style="{
         top: `${calculateTop(index)}px`,
@@ -10,76 +10,71 @@
       }"
     >
       <div>
-        <EdgeNode v-if="node.type === treeTypes.begin" :begin-node="true">
+        <EdgeNode v-if="node.model.type === treeTypes.begin" :begin-node="true">
           集合
         </EdgeNode>
-        <EdgeNode v-if="node.type === treeTypes.end">解散</EdgeNode>
+        <EdgeNode v-if="node.model.type === treeTypes.end">解散</EdgeNode>
         <ProcessNode
-          v-if="node.type === treeTypes.process"
-          @input="onChangeProcessNode(node, $event)"
+          v-if="node.model.type === treeTypes.process"
+          :defalut-value="node.model.value"
+          @input="setValue({ node, event: $event })"
         />
         <IfNode
-          v-if="node.type === treeTypes.if"
-          @input="onChangeIfNode(node, $event)"
+          v-if="node.model.type === treeTypes.if"
+          :defalut-value="node.model.value"
+          @input="setValue({ node, event: $event })"
         />
         <Fa
-          v-if="[treeTypes.process, treeTypes.if].includes(node.type)"
+          v-if="[treeTypes.process, treeTypes.if].includes(node.model.type)"
           icon="times"
           class="btn btn-times"
-          @click="removeNode(node.raw)"
+          @click="removeNode(node)"
         />
         <div
-          v-if="[treeTypes.begin, treeTypes.process].includes(node.type)"
+          v-if="[treeTypes.begin, treeTypes.process].includes(node.model.type)"
           class="btns"
         >
-          <Fa icon="plus" class="btn" @click="addProcessNode(node.raw)" />
+          <Fa icon="plus" class="btn" @click="addProcessNode(node)" />
           <Fa
             v-if="searchIfNodeIndex() === -1"
             icon="code-branch"
             class="btn"
-            @click="addIfNode(node.raw)"
+            @click="addIfNode(node)"
           />
         </div>
-        <div v-if="node.type === treeTypes.if" class="btns">
+        <div v-if="node.model.type === treeTypes.if" class="btns">
           <div class="btns-item">
-            <Fa icon="plus" class="btn" @click="addProcessNode(node.raw)" />
+            <Fa icon="plus" class="btn" @click="addProcessNode(node)" />
             <Fa
               v-if="searchIfNodeIndex() === -1"
               icon="code-branch"
               class="btn"
-              @click="addIfNode(node.raw)"
+              @click="addIfNode(node)"
             />
           </div>
           <div class="btns-item">
-            <Fa
-              icon="plus"
-              class="btn"
-              @click="addChildProcessNode(node.raw)"
-            />
-            <Fa
-              icon="code-branch"
-              class="btn"
-              @click="addChildIfNode(node.raw)"
-            />
+            <Fa icon="plus" class="btn" @click="addChildProcessNode(node)" />
+            <Fa icon="code-branch" class="btn" @click="addChildIfNode(node)" />
           </div>
         </div>
       </div>
       <div
-        v-if="node.children.length > 0"
+        v-if="node.hasOwnProperty('children') && node.children.length > 0"
         :style="{
           padding: `${
-            node.children[0].type === treeTypes.if ? '0' : '20px 0 0'
+            node.children[0].model.type === treeTypes.if ? '0' : '20px 0 0'
           }`,
         }"
       >
         <Renderer
-          :tree="node.children"
+          :tree="node"
           :tier="tier + 1"
           @addProcessNode="addProcessNode"
           @addChildProcessNode="addChildProcessNode"
           @addIfNode="addIfNode"
           @addChildIfNode="addChildIfNode"
           @removeNode="removeNode"
+          @setValue="setValue"
         />
       </div>
     </div>
@@ -103,7 +98,7 @@ export default {
   },
   props: {
     tree: {
-      type: Array,
+      type: Object,
       required: true,
     },
     tier: {
@@ -117,6 +112,9 @@ export default {
     }
   },
   methods: {
+    setValue(args) {
+      this.$emit('setValue', args)
+    },
     addProcessNode(raw) {
       this.$emit('addProcessNode', raw)
     },
@@ -132,15 +130,9 @@ export default {
     removeNode(raw) {
       this.$emit('removeNode', raw)
     },
-    onChangeProcessNode(node, e) {
-      this.$emit('setValue', node, e.target.value)
-    },
-    onChangeIfNode(node, e) {
-      this.$emit('setValue', node, e.target.value)
-    },
     searchIfNodeIndex() {
-      return this.tree.findIndex(
-        (node, index) => node.type === this.treeTypes.if
+      return this.tree.children.findIndex(
+        (node, index) => node.model.type === this.treeTypes.if
       )
     },
     calculateTop(index) {
@@ -198,13 +190,9 @@ export default {
   position: relative;
   top: 0;
   left: 0;
-  z-index: 0;
 }
 
 .absolute {
   position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
 }
 </style>

@@ -199,7 +199,8 @@ export default {
 
 .flow {
   &-chart {
-    overflow-y: scroll;
+    overflow: scroll;
+    height: 350px;
     margin: 0 0 20px 20px;
   }
 }
