@@ -55,9 +55,10 @@ export default {
           {
             id: 2,
             name: '集合',
+            value: '',
             type: this.treeTypes.begin,
           },
-          { id: 3, name: '解散', type: this.treeTypes.end },
+          { id: 3, name: '解散', value: '', type: this.treeTypes.end },
         ],
       }
       this.tree = this.treeModel.parse(nodes)
@@ -118,10 +119,8 @@ export default {
         if (
           Object.prototype.hasOwnProperty.call(node, 'children') &&
           node.children.length > 0
-        ) {
+        )
           obj.children = this.makeShapedTree(node.children)
-          console.log(node)
-        }
         shapedTree.push(obj)
       }
       return shapedTree
