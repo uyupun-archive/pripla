@@ -44,7 +44,7 @@ export default {
   width: 100%;
   background: $white;
   box-sizing: border-box;
-  z-index: 50;
+  z-index: 2;
 
   &-bar {
     display: flex;
@@ -54,12 +54,10 @@ export default {
     padding: 10px 15px;
     border-bottom: 1px solid $gray;
     background-color: $white;
-    z-index: 50;
   }
 
   &-text {
     font-size: 1.4rem;
-    z-index: 2;
   }
 
   &-panel {
