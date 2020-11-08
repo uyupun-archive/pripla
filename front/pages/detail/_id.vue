@@ -88,9 +88,7 @@ export default {
         })
     },
     parseTreeModel(tree) {
-      console.log(tree)
       const treeModel = new TreeModel()
-      console.log(treeModel.parse(tree))
       return treeModel.parse(tree)
     },
   },

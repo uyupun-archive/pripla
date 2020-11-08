@@ -121,7 +121,6 @@ export default {
     },
     getShapedTree() {
       const shapedTree = this.makeShapedTree(this.tree)
-      console.log(shapedTree)
       return shapedTree
     },
   },
