@@ -115,20 +115,20 @@ export default {
     setValue(args) {
       this.$emit('setValue', args)
     },
-    addProcessNode(raw) {
-      this.$emit('addProcessNode', raw)
+    addProcessNode(node) {
+      this.$emit('addProcessNode', node)
     },
-    addChildProcessNode(raw) {
-      this.$emit('addChildProcessNode', raw)
+    addChildProcessNode(node) {
+      this.$emit('addChildProcessNode', node)
     },
-    addIfNode(raw) {
-      this.$emit('addIfNode', raw)
+    addIfNode(node) {
+      this.$emit('addIfNode', node)
     },
-    addChildIfNode(raw) {
-      this.$emit('addChildIfNode', raw)
+    addChildIfNode(node) {
+      this.$emit('addChildIfNode', node)
     },
-    removeNode(raw) {
-      this.$emit('removeNode', raw)
+    removeNode(node) {
+      this.$emit('removeNode', node)
     },
     searchIfNodeIndex() {
       return this.tree.children.findIndex(
