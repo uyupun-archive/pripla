@@ -26,6 +26,7 @@ import TreeModel from 'tree-model'
 import { TreeTypes } from '~/components/flow-chart/tree-types.js'
 import Renderer from '~/components/flow-chart/renderer.vue'
 // import Tester from '~/components/flow-chart/tester.vue'
+import { getTree } from '~/components/flow-chart/tree.js'
 
 export default {
   components: {
@@ -46,22 +47,7 @@ export default {
   },
   methods: {
     initTree() {
-      const nodes = {
-        id: 1,
-        name: 'root',
-        value: '',
-        type: this.treeTypes.root,
-        children: [
-          {
-            id: 2,
-            name: '集合',
-            value: '',
-            type: this.treeTypes.begin,
-          },
-          { id: 3, name: '解散', value: '', type: this.treeTypes.end },
-        ],
-      }
-      this.tree = this.treeModel.parse(nodes)
+      this.tree = getTree()
       this.latestId = 3
     },
     setValue(args) {
