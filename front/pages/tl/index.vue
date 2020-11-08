@@ -91,9 +91,10 @@ export default {
     }
   },
   mounted() {
+    const getParams = this.getGetParams()
     this.loading = true
     Promise.all([
-      this.featchTl(),
+      this.featchTl(getParams),
       this.fetchPrefectures(),
       this.fetchBudgets(),
       this.fetchTargets(),
@@ -180,6 +181,17 @@ export default {
           this.loading = false
         })
       }
+      this.setGetParams(e.target)
+    },
+    getGetParams() {
+      const query = this.$route.query
+      if (Object.keys(query).length >= 1) return query
+      return null
+    },
+    setGetParams(getParams) {
+      this.$router.push(
+        `/tl?prefecture_id=${getParams.prefecture.value}&budget_id=${getParams.budget.value}&target_id=${getParams.target.value}`
+      )
     },
   },
 }
