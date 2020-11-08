@@ -94,9 +94,10 @@ export default {
 <style lang="scss" scoped>
 .header {
   position: relative;
-  height: 40px;
   display: flex;
   align-items: center;
+  padding: 15px 0 0;
+  margin: 0 0 20px;
 
   &-title {
     font-size: 14px;
@@ -118,11 +119,13 @@ export default {
     font-size: 18px;
     text-align: center;
     font-weight: normal;
+    margin: 0 0 20px;
   }
 
   &-list {
     list-style-type: none;
     padding: 0;
+    margin: 0;
   }
 
   &-item {
@@ -154,8 +157,9 @@ export default {
 .flow {
   &-chart {
     overflow: scroll;
-    height: 400px;
-    margin: 0 15px 20px;
+    height: calc(100vh - 250px);
+    min-height: 200px;
+    margin: 0 15px 15px;
   }
 }
 </style>
