@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="select-area">
-      <select class="select-box" :name="name">
+      <select
+        class="select-box"
+        :name="name"
+        @change="detectChangedValue($event)"
+      >
         <option
           v-for="(option, index) in options"
           :key="index"
@@ -26,6 +30,15 @@ export default {
     options: {
       type: Array,
       required: true,
+    },
+    validator: {
+      type: Function,
+      default: () => {},
+    },
+  },
+  methods: {
+    detectChangedValue(event) {
+      this.validator(event.target.value)
     },
   },
 }

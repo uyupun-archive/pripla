@@ -4,18 +4,32 @@
       <form class="form" @submit.prevent="onSubmit">
         <div class="form-links">
           <nuxt-link to="/tl" class="link">キャンセル</nuxt-link>
-          <Button type="submit" size="small">投稿</Button>
+          <Button type="submit" size="small" :disabled="!canPost()"
+            >投稿</Button
+          >
         </div>
         <p v-if="error" class="error-msg">投稿に失敗しました</p>
         <div v-if="prefectures && budgets && targets">
           <div class="form-item">
-            <TextBox name="title" placeholder="タイトル" />
+            <TextBox
+              name="title"
+              placeholder="タイトル"
+              :validator="validateTitle"
+            />
           </div>
           <div class="form-item">
-            <SelectBox name="prefecture" :options="prefectureOptions" />
+            <SelectBox
+              name="prefecture"
+              :options="prefectureOptions"
+              :validator="validatePrefecture"
+            />
           </div>
           <div class="form-item">
-            <SelectBox name="budget" :options="budgetOptions" />
+            <SelectBox
+              name="budget"
+              :options="budgetOptions"
+              :validator="validateBudget"
+            />
           </div>
           <div class="form-radio">
             <RadioButton
@@ -77,6 +91,11 @@ export default {
           selected: true,
         },
       ],
+      validate: {
+        title: false,
+        prefecture: false,
+        budget: false,
+      },
     }
   },
   mounted() {
@@ -147,6 +166,24 @@ export default {
       this.post(payload).finally(() => {
         this.loading = false
       })
+    },
+    validateTitle(value) {
+      this.validate.title = value.length > 0
+    },
+    validatePrefecture(value) {
+      this.validate.prefecture = value > 0
+    },
+    validateBudget(value) {
+      this.validate.budget = value > 0
+    },
+    canPost() {
+      if (
+        this.validate.title &&
+        this.validate.prefecture &&
+        this.validate.budget
+      )
+        return true
+      return false
     },
   },
 }
