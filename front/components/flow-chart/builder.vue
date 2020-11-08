@@ -50,15 +50,15 @@ export default {
         id: 1,
         name: 'root',
         value: '',
-        type: TreeTypes.root,
+        type: this.treeTypes.root,
         children: [
           {
             id: 2,
             name: '集合',
             value: '',
-            type: TreeTypes.begin,
+            type: this.treeTypes.begin,
           },
-          { id: 3, name: '解散', value: '', type: TreeTypes.end },
+          { id: 3, name: '解散', value: '', type: this.treeTypes.end },
         ],
       })
       this.latestId = 3
@@ -93,6 +93,8 @@ export default {
       )
       const childNode = this.makeParsedNode(type, name)
       baseNode.addChild(childNode)
+      const endNode = this.makeParsedNode(this.treeTypes.end, '解散')
+      baseNode.addChild(endNode)
     },
     makeParsedNode(type, name) {
       return this.treeModel.parse({
@@ -103,7 +105,12 @@ export default {
       })
     },
     removeNode(selectedNode) {
-      selectedNode.drop()
+      if (
+        selectedNode.parent.getIndex() === 2 &&
+        selectedNode.parent.children[1].model.type === this.treeTypes.end
+      )
+        selectedNode.parent.children[1].drop()
+      selectedNode.drop(selectedNode.parent.children[1])
     },
     makeShapedTree(node) {
       const shapedTree = {
