@@ -16,7 +16,7 @@
             name="target"
             :value="String(target.id)"
             :text="target.name"
-            :checked="target.id === 1"
+            :checked="setTargetChecked(target.id)"
           />
         </div>
         <div class="form-btn">
@@ -88,10 +88,12 @@ export default {
       budgets: null,
       targets: null,
       loading: false,
+      params: {},
     }
   },
   mounted() {
     this.loading = true
+    this.setParams()
     Promise.all([
       this.featchTl(),
       this.fetchPrefectures(),
@@ -102,16 +104,11 @@ export default {
     })
   },
   methods: {
-    featchTl(params = null) {
+    featchTl() {
       this.plans = null
       this.plansNot = false
-      if (params) {
-        return this.$fetchTl(params).then((plans) => {
-          if (plans.length) this.plans = plans
-          else this.plansNot = true
-        })
-      } else {
-        return this.$fetchTl().then((plans) => {
+      if (this.params) {
+        return this.$fetchTl(this.params).then((plans) => {
           if (plans.length) this.plans = plans
           else this.plansNot = true
         })
@@ -120,13 +117,13 @@ export default {
     fetchPrefectures() {
       return this.$fetchPrefectures().then((prefectures) => {
         this.prefectures = prefectures
-        this.addPrefectureOptions(prefectures)
+        this.setPrefectureOptions(prefectures)
       })
     },
     fetchBudgets() {
       return this.$fetchBudgets().then((budgets) => {
         this.budgets = budgets
-        this.addBudgetOptions(budgets)
+        this.setBudgetOptions(budgets)
       })
     },
     fetchTargets() {
@@ -134,23 +131,33 @@ export default {
         this.targets = targets
       })
     },
-    addPrefectureOptions(prefectures) {
+    setPrefectureOptions(prefectures) {
+      const prefectureId = this.getParamByKey('prefecture_id')
       prefectures.map((prefecture) => {
         this.prefectureOptions.push({
           value: prefecture.id,
           text: prefecture.name,
-          selected: false,
+          selected: prefecture.id === prefectureId,
         })
       })
+      if (prefectureId) this.prefectureOptions[0].selected = false
     },
-    addBudgetOptions(budgets) {
+    setBudgetOptions(budgets) {
+      const budgetId = this.getParamByKey('budget_id')
       budgets.map((budget) => {
         this.budgetOptions.push({
           value: budget.id,
           text: budget.range,
-          selected: false,
+          selected: budget.id === budgetId,
         })
       })
+      if (budgetId) this.budgetOptions[0].selected = false
+    },
+    setTargetChecked(id) {
+      const targetId = this.getParamByKey('target_id')
+      if (id === targetId) return true
+      else if (id === 1) return true
+      return false
     },
     validation(params) {
       return (
@@ -160,6 +167,7 @@ export default {
       )
     },
     search(e) {
+      this.updateParams(e.target)
       const params = {}
       if (Number(e.target.prefecture.value))
         params.prefecture_id = Number(e.target.prefecture.value)
@@ -180,6 +188,22 @@ export default {
           this.loading = false
         })
       }
+    },
+    getParamByKey(key) {
+      if (key in this.params) return Number(this.params[key])
+      return null
+    },
+    setParams() {
+      this.params = this.$route.query
+    },
+    updateParams(params) {
+      const objParams = {}
+      if (params.prefecture.value)
+        objParams.prefecture_id = params.prefecture.value
+      if (params.budget.value) objParams.budget_id = params.budget.value
+      if (params.target.value) objParams.target_id = params.target.value
+      this.params = objParams
+      this.$router.push({ path: '/tl', query: this.params })
     },
   },
 }
