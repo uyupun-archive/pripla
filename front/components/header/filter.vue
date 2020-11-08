@@ -66,6 +66,7 @@ export default {
     transition: all 0.3s;
     padding: 15px;
     border-bottom: 2px solid $gray;
+    margin-bottom: -236px;
   }
 
   & .active {
