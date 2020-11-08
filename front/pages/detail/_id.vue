@@ -35,7 +35,9 @@
             <span>デートの流れ</span>
           </li>
         </ul>
-        <div>{{ plan.flow_chart }}</div>
+        <div class="flow-chart">
+          <Renderer :tree="getPlanTree(plan.flow_chart)" :input-mode="false" />
+        </div>
       </div>
     </div>
     <Loading v-if="loading" />
@@ -44,10 +46,13 @@
 
 <script>
 import Loading from '~/components/loading/index.vue'
+import Renderer from '~/components/flow-chart/renderer.vue'
+import { getTree } from '~/components/flow-chart/tree.js'
 
 export default {
   components: {
     Loading,
+    Renderer,
   },
   data() {
     return {
@@ -78,6 +83,9 @@ export default {
         .catch(() => {
           this.$router.push('/404')
         })
+    },
+    getPlanTree(shapedTree) {
+      return getTree(shapedTree)
     },
   },
 }
@@ -140,6 +148,14 @@ export default {
     &__margin {
       margin-right: 20px;
     }
+  }
+}
+
+.flow {
+  &-chart {
+    overflow: scroll;
+    height: 400px;
+    margin: 0 15px 20px;
   }
 }
 </style>
