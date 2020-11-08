@@ -11,7 +11,7 @@
         />
         <Fa v-else icon="chevron-down" class="icon" area-hidden="true" />
       </div>
-      <div v-if="showFilterPanel" class="filter-panel">
+      <div class="filter-panel" :class="{ active: showFilterPanel }">
         <slot />
       </div>
     </header>
@@ -39,15 +39,15 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  background: $white;
   box-sizing: border-box;
-  z-index: 1;
+  z-index: 2;
 
   &-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    background-color: $white;
     padding: 10px 15px;
     border-bottom: 1px solid $gray;
   }
@@ -57,9 +57,19 @@ export default {
   }
 
   &-panel {
+    position: relative;
+    top: -236px;
+    display: block;
     background: $white;
+    z-index: -1;
+    overflow: hidden;
+    transition: all 0.3s;
     padding: 15px;
-    border-bottom: 1px solid $gray;
+    border-bottom: 2px solid $gray;
+  }
+
+  & .active {
+    top: 0;
   }
 
   & .icon {
