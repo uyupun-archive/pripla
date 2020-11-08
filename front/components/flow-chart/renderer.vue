@@ -1,7 +1,15 @@
 <template>
-  <div>
-    <div v-for="node in tree" :key="node.id" class="flexbox">
-      <div class="relative">
+  <div class="relative">
+    <div
+      v-for="(node, index) in tree"
+      :key="node.id"
+      class="absolute"
+      :style="{
+        top: `${calculateTop(index)}px`,
+        left: `${tier !== 1 ? 252 : 0}px`,
+      }"
+    >
+      <div>
         <EdgeNode v-if="node.type === treeTypes.begin" :begin-node="true">
           集合
         </EdgeNode>
@@ -26,7 +34,7 @@
         >
           <Fa icon="plus" class="btn" @click="addProcessNode(node.raw)" />
           <Fa
-            v-if="!searchIfNode()"
+            v-if="searchIfNodeIndex() === -1"
             icon="code-branch"
             class="btn"
             @click="addIfNode(node.raw)"
@@ -36,7 +44,7 @@
           <div class="btns-item">
             <Fa icon="plus" class="btn" @click="addProcessNode(node.raw)" />
             <Fa
-              v-if="!searchIfNode()"
+              v-if="searchIfNodeIndex() === -1"
               icon="code-branch"
               class="btn"
               @click="addIfNode(node.raw)"
@@ -109,13 +117,6 @@ export default {
     }
   },
   methods: {
-    searchIfNode() {
-      let flag = false
-      this.tree.map((node) => {
-        if (node.type === this.treeTypes.if) flag = true
-      })
-      return flag
-    },
     addProcessNode(raw) {
       this.$emit('addProcessNode', raw)
     },
@@ -136,6 +137,23 @@ export default {
     },
     onChangeIfNode(node, e) {
       this.$emit('setValue', node, e.target.value)
+    },
+    searchIfNodeIndex() {
+      return this.tree.findIndex(
+        (node, index) => node.type === this.treeTypes.if
+      )
+    },
+    calculateTop(index) {
+      const ifNodeIndex = this.searchIfNodeIndex()
+      if (ifNodeIndex === -1 && this.tier === 1) {
+        return 105 * index
+      } else if (ifNodeIndex !== -1 && this.tier === 1) {
+        return ifNodeIndex < index ? 105 * (index - 1) + 147.5 : 105 * index
+      } else if (ifNodeIndex === -1 && this.tier !== 1) {
+        return 105 * index - 147.5
+      } else {
+        return ifNodeIndex < index ? 105 * (index - 1) : 105 * index - 147.5
+      }
     },
   },
 }
@@ -178,5 +196,15 @@ export default {
 
 .relative {
   position: relative;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 </style>
