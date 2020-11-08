@@ -3,7 +3,7 @@
     <div class="arrow">
       <input
         v-if="inputMode"
-        class="processnode"
+        class="process-node"
         type="text"
         :name="name"
         :value="defaultValue"
@@ -11,7 +11,7 @@
         maxlength="16"
         @input="onChange"
       />
-      <span v-else class="processnode">{{ value }}</span>
+      <span v-else class="process-node">{{ value }}</span>
     </div>
   </div>
 </template>
@@ -54,7 +54,8 @@ export default {
   position: relative;
   display: inline-block;
   width: 200px;
-  margin: 0 0 55px;
+  max-height: 40px;
+  margin-bottom: 55px;
 
   &::before {
     content: '';
@@ -80,7 +81,7 @@ export default {
   }
 }
 
-.processnode {
+.process-node {
   width: 200px;
   display: inline-block;
   text-align: center;
@@ -93,6 +94,7 @@ export default {
   padding: 12px 20px;
   border: none;
   border-radius: 10px;
+  min-height: 40px;
 
   &::placeholder {
     color: $lightGray;

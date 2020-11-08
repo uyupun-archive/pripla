@@ -113,6 +113,7 @@ export default {
     position: absolute;
     width: 20px;
     height: 20px;
+    cursor: pointer;
   }
 }
 
