@@ -33,7 +33,7 @@ class PostFactory extends Factory
             'prefecture_id' => rand(1, $prefectureLastId),
             'budget_id'     => rand(1, $budgetLastId),
             'target_id'     => rand(1, $targetLastId),
-            'flow_chart'    => json_decode('[{"id": 2, "name": "集合", "type": 2, "children": []}, {"id": 3, "name": "解散", "type": 3, "children": []}]'),
+            'flow_chart'    => json_decode('{"id": 1, "name": "root", "type": 1, "value": "", "children": [{"id": 2, "name": "集合", "type": 2, "value": "", "children": []}, {"id": 4, "name": "行動を入力", "type": 4, "value": "動物園に行く", "children": []}, {"id": 3, "name": "解散", "type": 3, "value": "", "children": []}]}'),
         ];
     }
 }
