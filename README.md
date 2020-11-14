@@ -17,12 +17,8 @@ $ make up
 $ make down
 # Dockerのプロセス確認
 $ make ps
-# シェルの起動
-$ make sh
 # DBにテーブル作成 + シーダーの実行
 $ make db
-# Tinkerの起動
-$ make tinker
 # Linterによるコード修正
 $ make lint
 ```
