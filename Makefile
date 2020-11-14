@@ -30,7 +30,7 @@ prod-up:
 
 prod-down:
 	-docker-compose down
-	-cd front && docker-compose -f docker-compose-prod-yml down
+	-cd front && docker-compose -f docker-compose-prod.yml down
 
 ps:
 	docker-compose ps
