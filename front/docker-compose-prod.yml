@@ -7,7 +7,7 @@ services:
     hostname: pripla_nuxt
     image: node:15.2.0-alpine3.10
     ports:
-      - ${APP_PORT}:3000
+      - ${APP_EXPOSE_PORT}:${APP_PORT}
     working_dir: /var/www
     command: yarn start
     volumes:
