@@ -1,4 +1,4 @@
-.PHONY: up down ps sh db tinker lint
+.PHONY: up down prod-down ps db lint
 
 setup:
 	# Frontend
@@ -23,24 +23,21 @@ down:
 
 prod-up:
 	docker-compose up -d
+	cd front && rm -rf .nuxt
+	cd front && rm -rf dist
 	cd front && yarn build
-	cd front && nohup yarn start > /dev/null 2>&1 &
+	cd front && docker-compose -f docker-compose-prod.yml up -d
 
 prod-down:
 	-docker-compose down
-	-kill `lsof -i :3001 | awk '$$1 == "node" { print $$2 }'`
+	-cd front && docker-compose -f docker-compose-prod-yml down
 
 ps:
 	docker-compose ps
-
-sh:
-	docker-compose exec php bash
+	cd front && docker-compose -f docker-compose-prod.yml ps
 
 db:
 	docker-compose exec php php artisan migrate:fresh --seed
-
-tinker:
-	docker-compose exec php php artisan tinker
 
 lint:
 	cd front && yarn lint --fix
