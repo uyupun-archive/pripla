@@ -1,5 +1,6 @@
 {
   "name": "pripla",
+  "description": "Princess & Prince date planning service.",
   "version": "1.0.0",
   "private": true,
   "scripts": {
