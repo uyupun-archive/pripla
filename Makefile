@@ -23,6 +23,7 @@ down:
 
 prod-up:
 	docker-compose up -d
+	yarn
 	cd front && rm -rf .nuxt
 	cd front && rm -rf dist
 	cd front && yarn build
