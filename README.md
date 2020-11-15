@@ -17,6 +17,8 @@ $ make up
 $ make down
 # Dockerのプロセス確認
 $ make ps
+# Laravelのコンテナのシェルに入る
+$ make sh
 # DBにテーブル作成 + シーダーの実行
 $ make db
 # Linterによるコード修正

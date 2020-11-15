@@ -1,4 +1,4 @@
-.PHONY: up down prod-down ps db lint
+.PHONY: up down prod-down ps sh db lint
 
 setup:
 	# Frontend
@@ -36,6 +36,9 @@ prod-down:
 ps:
 	docker-compose ps
 	cd front && docker-compose -f docker-compose-prod.yml ps
+
+sh:
+	docker-compose exec php bash
 
 db:
 	docker-compose exec php php artisan migrate:fresh --seed
