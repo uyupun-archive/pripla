@@ -59,7 +59,7 @@ export default {
 
   proxy: {
     '/api/v0/': {
-      target: process.env.API_HOST,
+      target: process.env.API_URL,
     },
   },
 
