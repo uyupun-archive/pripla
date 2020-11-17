@@ -7,7 +7,7 @@ setup:
 	cd ../
 	# Backend
 	cp .env.example .env
-	docker network create pripla
+	-docker network create pripla
 	docker-compose build --no-cache
 	docker-compose up -d
 	docker-compose exec php composer install
