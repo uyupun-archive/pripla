@@ -38,17 +38,17 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  box-sizing: border-box;
   z-index: 2;
+  box-sizing: border-box;
+  width: 100%;
 
   &-bar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
     cursor: pointer;
     background-color: $white;
-    padding: 10px 15px;
     border-bottom: 1px solid $gray;
   }
 
@@ -59,14 +59,14 @@ export default {
   &-panel {
     position: relative;
     top: -236px;
-    display: block;
-    background: $white;
     z-index: -1;
-    overflow: hidden;
-    transition: all 0.3s;
+    display: block;
     padding: 15px;
-    border-bottom: 2px solid $gray;
     margin-bottom: -236px;
+    overflow: hidden;
+    background: $white;
+    border-bottom: 2px solid $gray;
+    transition: all 0.3s;
   }
 
   & .active {

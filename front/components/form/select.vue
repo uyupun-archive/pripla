@@ -51,15 +51,15 @@ export default {
   }
 
   &-box {
+    box-sizing: border-box;
     width: 100%;
     height: 40px;
-    appearance: none;
-    outline: none;
+    padding: 10px 15px;
     background: $white;
-    box-sizing: border-box;
     border: 1px solid $pink;
     border-radius: 10px;
-    padding: 10px 15px;
+    outline: none;
+    appearance: none;
   }
 }
 
@@ -67,9 +67,9 @@ export default {
   position: absolute;
   top: 50%;
   right: 15px;
-  transform: translateY(-50%);
   height: 24px;
   color: $darkGray;
   pointer-events: none;
+  transform: translateY(-50%);
 }
 </style>

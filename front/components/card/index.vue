@@ -47,18 +47,18 @@ export default {
 <style lang="scss" scoped>
 .card {
   position: relative;
-  width: 100%;
   box-sizing: border-box;
-  cursor: pointer;
+  width: 100%;
   padding: 15px;
+  margin: 0 0 15px;
+  cursor: pointer;
   border: 1px solid $gray;
   border-radius: 10px;
-  margin: 0 0 15px;
 
   &-title {
+    margin: 0 0 5px;
     font-size: 1.4rem;
     font-weight: normal;
-    margin: 0 0 5px;
   }
 
   &-item {

@@ -128,18 +128,18 @@ export default {
 
 <style lang="scss" scoped>
 .edge {
-  border: 2px solid #000;
   background-color: red;
+  border: 2px solid #000;
 }
 
 .process {
-  border: 2px solid #000;
   background-color: blue;
+  border: 2px solid #000;
 }
 
 .if {
-  border: 2px solid #000;
   background-color: green;
+  border: 2px solid #000;
 }
 
 .node {

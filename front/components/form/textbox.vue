@@ -41,14 +41,14 @@ export default {
 
 <style lang="scss" scoped>
 .textbox {
+  box-sizing: border-box;
   width: 100%;
   height: 40px;
-  outline: none;
-  box-sizing: border-box;
+  padding: 10px 15px;
   background: $white;
   border: 1px solid $pink;
   border-radius: 10px;
-  padding: 10px 15px;
+  outline: none;
 
   &::placeholder {
     color: $darkGray;

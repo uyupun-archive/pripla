@@ -23,18 +23,18 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 50px;
   height: 50px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
   cursor: pointer;
   background: $pink;
-  outline: none;
-  box-sizing: border-box;
-  padding: 0;
   border: none;
   border-radius: 50%;
+  outline: none;
 
   @include desktop() {
     width: 80px;

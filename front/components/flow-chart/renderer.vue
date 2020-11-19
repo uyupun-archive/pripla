@@ -178,16 +178,16 @@ export default {
   position: absolute;
   bottom: 10px;
   display: inline-flex;
-  justify-content: space-around;
   align-items: center;
+  justify-content: space-around;
   width: 200px;
 
   & span {
     width: 50%;
 
     &:first-of-type {
-      text-align: right;
       padding-right: 20px;
+      text-align: right;
     }
 
     &:last-of-type {
@@ -197,16 +197,16 @@ export default {
 
   &-item {
     display: inline-flex;
-    justify-content: space-around;
     align-items: center;
+    justify-content: space-around;
     width: 50%;
 
     & span {
       width: 50%;
 
       &:first-of-type {
-        text-align: right;
         padding-right: 10px;
+        text-align: right;
       }
 
       &:last-of-type {
@@ -217,11 +217,11 @@ export default {
 }
 
 .btn {
-  height: 25px;
-  outline: none;
-  border: none;
-  transform: rotate(180deg);
   z-index: 100;
+  height: 25px;
+  border: none;
+  outline: none;
+  transform: rotate(180deg);
 
   &-times {
     position: absolute;
@@ -232,8 +232,8 @@ export default {
 
 .flexbox {
   display: inline-flex;
-  justify-content: space-between;
   align-items: top;
+  justify-content: space-between;
 }
 
 .relative {

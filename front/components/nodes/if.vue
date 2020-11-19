@@ -62,27 +62,27 @@ export default {
 .if {
   &-box {
     display: inline-flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     width: 100px;
     height: 100px;
+    overflow: hidden;
     background-color: $pink;
     border-radius: 3px;
-    overflow: hidden;
     transform: translateX(50%) rotate(45deg) skew(-22deg, -22deg);
   }
 
   &-inner {
-    width: 160px;
-    text-align: center;
-    display: inline-block;
-    color: $white;
-    font-size: 14px;
-    background: $pink;
-    outline: none;
-    padding: 0;
-    border: none;
     box-sizing: border-box;
+    display: inline-block;
+    width: 160px;
+    padding: 0;
+    font-size: 14px;
+    color: $white;
+    text-align: center;
+    background: $pink;
+    border: none;
+    outline: none;
     transform: skew(22deg, 22deg) rotate(-45deg);
 
     &::placeholder {
@@ -90,16 +90,9 @@ export default {
     }
 
     &:-webkit-autofill {
-      animation-name: onAutoFillStart;
       transition: all 50000s ease-in-out 0s;
+      animation-name: onAutoFillStart;
     }
-  }
-}
-
-@keyframes onAutoFillStart {
-  from {
-  }
-  to {
   }
 }
 
@@ -112,26 +105,26 @@ export default {
   margin: -8.5px 0 46px;
 
   &::before {
-    content: '';
     position: absolute;
-    left: 50%;
     bottom: -41px;
-    transform: translateX(-50%);
+    left: 50%;
     display: inline-block;
     width: 1px;
     height: 50px;
+    content: '';
     background: $black;
+    transform: translateX(-50%);
   }
 
   &::after {
-    content: '';
     position: absolute;
-    left: 50%;
     bottom: -51px;
-    transform: translateX(-50%);
+    left: 50%;
     display: inline-block;
+    content: '';
     border: 5px solid transparent;
     border-top: 5px solid $black;
+    transform: translateX(-50%);
   }
 
   &-side {
@@ -143,11 +136,11 @@ export default {
     background: $black;
 
     &::after {
-      content: '';
       position: absolute;
       top: -5px;
       right: -10px;
       display: inline-block;
+      content: '';
       border: 5px solid transparent;
       border-left: 5px solid $black;
     }

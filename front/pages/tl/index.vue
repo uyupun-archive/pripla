@@ -240,8 +240,8 @@ export default {
 .btn {
   &-plus {
     position: fixed;
-    bottom: 15px;
     right: 15px;
+    bottom: 15px;
     z-index: 10000;
   }
 }
@@ -249,9 +249,9 @@ export default {
 .plans {
   &-not {
     &__msg {
+      margin: 0;
       font-size: 14px;
       text-align: center;
-      margin: 0;
     }
   }
 }

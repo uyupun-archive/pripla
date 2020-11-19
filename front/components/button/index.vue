@@ -37,24 +37,24 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  width: 100%;
+  box-sizing: border-box;
   display: inline-block;
-  color: $white;
-  cursor: pointer;
+  width: 100%;
   font-size: 14px;
   line-height: 1;
+  color: $white;
+  cursor: pointer;
   background: $pink;
-  outline: none;
-  box-sizing: border-box;
   border: none;
+  outline: none;
 
   &:hover {
     opacity: 0.75;
   }
 
   &:disabled {
-    background: $gray;
     cursor: auto;
+    background: $gray;
 
     &:hover {
       opacity: 1;

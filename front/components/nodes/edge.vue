@@ -19,18 +19,18 @@ export default {
 
 <style lang="scss" scoped>
 .edge-node {
+  box-sizing: border-box;
+  display: inline-block;
   width: 200px;
   padding: 13px 20px;
-  border-radius: 50px;
-  display: inline-block;
-  text-align: center;
-  color: $white;
   font-size: 14px;
   line-height: 1;
+  color: $white;
+  text-align: center;
   background: $pink;
-  outline: none;
-  box-sizing: border-box;
   border: none;
+  border-radius: 50px;
+  outline: none;
 }
 
 .arrow {
@@ -38,26 +38,26 @@ export default {
   margin: 0 0 55px;
 
   &::before {
-    content: '';
     position: absolute;
-    left: 50%;
     bottom: -50px;
-    transform: translateX(-50%);
+    left: 50%;
     display: inline-block;
     width: 1px;
     height: 50px;
+    content: '';
     background: $black;
+    transform: translateX(-50%);
   }
 
   &::after {
-    content: '';
     position: absolute;
-    left: 50%;
     bottom: -60px;
-    transform: translateX(-50%);
+    left: 50%;
     display: inline-block;
+    content: '';
     border: 5px solid transparent;
     border-top: 5px solid $black;
+    transform: translateX(-50%);
   }
 }
 </style>

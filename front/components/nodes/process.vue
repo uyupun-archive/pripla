@@ -58,43 +58,43 @@ export default {
   margin-bottom: 55px;
 
   &::before {
-    content: '';
     position: absolute;
-    left: 50%;
     bottom: -50px;
-    transform: translateX(-50%);
+    left: 50%;
     display: inline-block;
     width: 1px;
     height: 50px;
+    content: '';
     background: $black;
+    transform: translateX(-50%);
   }
 
   &::after {
-    content: '';
     position: absolute;
-    left: 50%;
     bottom: -60px;
-    transform: translateX(-50%);
+    left: 50%;
     display: inline-block;
+    content: '';
     border: 5px solid transparent;
     border-top: 5px solid $black;
+    transform: translateX(-50%);
   }
 }
 
 .process-node {
-  width: 200px;
+  box-sizing: border-box;
   display: inline-block;
-  text-align: center;
-  color: $white;
+  width: 200px;
+  min-height: 40px;
+  padding: 12px 20px;
   font-size: 14px;
   line-height: 1;
+  color: $white;
+  text-align: center;
   background: $pink;
-  outline: none;
-  box-sizing: border-box;
-  padding: 12px 20px;
   border: none;
   border-radius: 10px;
-  min-height: 40px;
+  outline: none;
 
   &::placeholder {
     color: $lightGray;

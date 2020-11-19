@@ -50,14 +50,14 @@ export default {
     cursor: pointer;
 
     &::before {
-      content: '';
-      display: block;
       position: absolute;
       top: 0;
       left: 0;
+      box-sizing: border-box;
+      display: block;
       width: 24px;
       height: 24px;
-      box-sizing: border-box;
+      content: '';
       border: 1px solid $pink;
       border-radius: 50%;
     }
@@ -67,17 +67,17 @@ export default {
     display: none;
 
     &:checked + .radio-label::after {
-      content: '';
-      display: block;
       position: absolute;
       top: 50%;
       left: 3px;
-      transform: translateY(-50%);
+      box-sizing: border-box;
+      display: block;
       width: 18px;
       height: 18px;
+      content: '';
       background: $pink;
-      box-sizing: border-box;
       border-radius: 50%;
+      transform: translateY(-50%);
     }
   }
 }

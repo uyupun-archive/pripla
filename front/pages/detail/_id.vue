@@ -104,8 +104,8 @@ export default {
   margin: 0 0 20px;
 
   &-title {
-    font-size: 14px;
     width: 100%;
+    font-size: 14px;
     text-align: center;
   }
 
@@ -121,21 +121,21 @@ export default {
   margin-bottom: 12px;
 
   &-title {
-    font-size: 18px;
-    text-align: center;
-    font-weight: normal;
     margin: 0 0 20px;
+    font-size: 18px;
+    font-weight: normal;
+    text-align: center;
   }
 
   &-list {
-    list-style-type: none;
     padding: 0;
     margin: 0;
+    list-style-type: none;
   }
 
   &-item {
-    margin-bottom: 10px;
     height: 20px;
+    margin-bottom: 10px;
 
     &:nth-of-type(3) {
       margin-bottom: 20px;
@@ -143,9 +143,9 @@ export default {
   }
 
   &-detail {
-    text-align: left;
-    font-size: 14px;
     padding-left: 25px;
+    font-size: 14px;
+    text-align: left;
 
     &__icon {
       width: 20px;
@@ -161,10 +161,10 @@ export default {
 
 .flow {
   &-chart {
-    overflow: scroll;
     height: calc(100vh - 250px);
     min-height: 200px;
     margin: 0 15px 15px;
+    overflow: scroll;
   }
 }
 </style>

@@ -191,13 +191,13 @@ export default {
 
 <style lang="scss" scoped>
 .form {
-  font-size: 14px;
   padding: 15px 0 0;
+  font-size: 14px;
 
   &-links {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     margin: 0 0 20px;
 
     & .link {
@@ -227,10 +227,10 @@ export default {
 
 .error {
   &-msg {
-    color: $red;
-    font-size: 14px;
-    text-align: center;
     margin: 0 0 20px;
+    font-size: 14px;
+    color: $red;
+    text-align: center;
   }
 }
 
@@ -240,10 +240,10 @@ export default {
   }
 
   &-chart {
-    overflow: scroll;
     height: calc(100vh - 340px);
     min-height: 350px;
     margin: 0 15px 15px;
+    overflow: scroll;
   }
 }
 </style>

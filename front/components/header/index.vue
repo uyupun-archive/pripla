@@ -17,8 +17,8 @@
 <style lang="scss" scoped>
 .background {
   height: 250px;
-  background: linear-gradient(-135deg, $orange, $pink);
   margin-bottom: 30px;
+  background: linear-gradient(-135deg, $orange, $pink);
 
   @include desktop() {
     height: 400px;
@@ -28,12 +28,12 @@
 
 .logo {
   &-wrapper {
+    box-sizing: border-box;
     height: 250px;
-    text-align: center;
+    padding-top: 60px;
     font-family: 'Comfortaa', sans-serif;
     color: $white;
-    box-sizing: border-box;
-    padding-top: 60px;
+    text-align: center;
 
     @include desktop() {
       height: 400px;
@@ -49,8 +49,8 @@
 
   &-title {
     margin: 0;
-    font-size: 36px;
     margin-bottom: 5px;
+    font-size: 36px;
   }
 
   &-subtitle {
