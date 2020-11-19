@@ -22,7 +22,7 @@ $ make sh
 # DBにテーブル作成 + シーダーの実行
 $ make db
 # Linterによるコード修正
-$ make lint
+$ make fix
 ```
 
 ### カンプ

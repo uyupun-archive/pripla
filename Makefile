@@ -1,4 +1,4 @@
-.PHONY: up down prod-down ps sh db lint
+.PHONY: up down prod-down ps sh db fix
 
 setup:
 	# Frontend
@@ -43,5 +43,6 @@ sh:
 db:
 	docker-compose exec php php artisan migrate:fresh --seed
 
-lint:
-	cd front && yarn lint --fix
+fix:
+	cd front && yarn lint:js --fix
+	cd front && yarn lint:scss --fix
