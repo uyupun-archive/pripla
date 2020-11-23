@@ -43,10 +43,10 @@
           "
           class="btns"
         >
-          <span :style="{ widht: '100px' }">
+          <span class="btns-area">
             <Fa icon="plus" class="btn" @click="addProcessNode(node)" />
           </span>
-          <span :style="{ widht: '100px' }">
+          <span class="btns-area">
             <Fa
               v-if="searchIfNodeIndex() === -1"
               icon="code-branch"
@@ -57,16 +57,16 @@
         </div>
         <div v-if="node.model.type === treeTypes.if && inputMode" class="btns">
           <div class="btns-item">
-            <span />
-            <span>
+            <span class="btn-item__area" />
+            <span class="btn-item__area">
               <Fa icon="plus" class="btn" @click="addProcessNode(node)" />
             </span>
           </div>
           <div class="btns-item">
-            <span>
+            <span class="btn-item__area">
               <Fa icon="plus" class="btn" @click="addChildProcessNode(node)" />
             </span>
-            <span>
+            <span class="btn-item__area">
               <Fa
                 icon="code-branch"
                 class="btn"
@@ -182,7 +182,7 @@ export default {
   justify-content: space-around;
   width: 200px;
 
-  & span {
+  &-area {
     width: 50%;
 
     &:first-of-type {
@@ -201,7 +201,7 @@ export default {
     justify-content: space-around;
     width: 50%;
 
-    & span {
+    &-area {
       width: 50%;
 
       &:first-of-type {
